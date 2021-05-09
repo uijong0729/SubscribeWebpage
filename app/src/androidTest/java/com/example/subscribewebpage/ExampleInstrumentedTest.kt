@@ -1,16 +1,22 @@
 package com.example.subscribewebpage
 
+import android.app.Activity
+import android.content.ContextWrapper
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.room.*
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfo
-
+import org.junit.Assert.*
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -21,17 +27,20 @@ import org.junit.Assert.*
 class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
-        val transaction = Transaction.getInstance(InstrumentationRegistry.getInstrumentation().targetContext)
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val transaction = Transaction.getInstance(context)
         val dao = transaction?.webInfoDao()
-        dao?.insertAll(
-            WebInfo("name ${Math.random()}" , "keyword", 5, 20201231000000)
-        )
-
-        val list = dao?.getAll()
-        for(items in list!!){
-            Log.d("[DEBUGER]", "[DEBUGER] ${items.title}")
-        }
-
+//        dao?.insertAll(
+//            WebInfo("name ${Math.random()}" , "keyword", "url", 5, 20201231000000)
+//        )
+//
+//        // Create the observer which updates the UI.
+//        val nameObserver = Observer<List<WebInfo>> { list ->
+//            for (webInfo in list){
+//                Log.d("[DEBUGGER]", webInfo.title)
+//            }
+//        }
+//        dao?.getAll()!!.observe(context, nameObserver)
     }
 }
 

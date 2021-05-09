@@ -1,9 +1,6 @@
 package com.example.subscribewebpage
 
 import org.junit.Test
-import java.net.HttpURLConnection
-import org.junit.Assert.*
-import java.net.URL
 
 /**
  * Example local unit test, which will execute on the development machine (host).

@@ -12,6 +12,8 @@ data class WebInfo (
     @ColumnInfo
     val keyword: String?,
     @ColumnInfo
+    val url: String?,
+    @ColumnInfo
     val interval: Int?,
     @ColumnInfo
     val inputDate: Long = 19700101000000,
