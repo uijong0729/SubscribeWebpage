@@ -1,45 +1,36 @@
-package com.example.subscribewebpage
+package com.example.subscribewebpage.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.placeholder.PlaceholderContent
 import com.example.subscribewebpage.databinding.FragmentItemDetailBinding
 
 /**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a [ItemListFragment]
- * in two-pane mode (on larger screen devices) or self-contained
- * on handsets.
+ * 리스트 중 하나를 클릭했을 때 표시되는 Fragment
  */
 class ItemDetailFragment : Fragment() {
 
-    /**
-     * The placeholder content this fragment is presenting.
-     */
     private var item: PlaceholderContent.PlaceholderItem? = null
-
     lateinit var itemDetailTextView: TextView
-
     private var _binding: FragmentItemDetailBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("[Debug]", "onCreate in ItemDetailFragment")
 
         arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
+            if (it.containsKey(Const.ARG_ITEM_ID)) {
                 // Load the placeholder content specified by the fragment
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
-                item = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
+                item = PlaceholderContent.ITEM_MAP[it.getString(Const.ARG_ITEM_ID)]
             }
         }
     }
@@ -48,6 +39,8 @@ class ItemDetailFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+
+        Log.d("[Debug]", "onCreateView in ItemDetailFragment")
 
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
@@ -61,14 +54,6 @@ class ItemDetailFragment : Fragment() {
         }
 
         return rootView
-    }
-
-    companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
     }
 
     override fun onDestroyView() {
