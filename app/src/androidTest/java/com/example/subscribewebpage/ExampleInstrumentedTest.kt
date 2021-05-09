@@ -1,7 +1,11 @@
 package com.example.subscribewebpage
 
+import android.util.Log
+import androidx.room.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.subscribewebpage.data.Transaction
+import com.example.subscribewebpage.data.WebInfo
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -11,14 +15,23 @@ import org.junit.Assert.*
 /**
  * Instrumented test, which will execute on an Android device.
  *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * InstrumentationRegistry.getInstrumentation().targetContext
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.subscribewebpage", appContext.packageName)
+        val transaction = Transaction.getInstance(InstrumentationRegistry.getInstrumentation().targetContext)
+        val dao = transaction?.webInfoDao()
+        dao?.insertAll(
+            WebInfo("name ${Math.random()}" , "keyword", 5, 20201231000000)
+        )
+
+        val list = dao?.getAll()
+        for(items in list!!){
+            Log.d("[DEBUGER]", "[DEBUGER] ${items.title}")
+        }
+
     }
 }
+
