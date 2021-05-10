@@ -5,21 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [WebInfo::class], version = 2)
-abstract class Transaction: RoomDatabase() {
+@Database(entities = [WebInfoEntity::class], version = 4)
+abstract class RommAppDb: RoomDatabase() {
     abstract fun webInfoDao(): WebInfoDao
 
     companion object {
-        private var INSTANCE: Transaction? = null
+        private var INSTANCE: RommAppDb? = null
 
-        fun getInstance(context: Context): Transaction? {
+        fun getInstance(context: Context): RommAppDb? {
             if (INSTANCE == null) {
-                synchronized(Transaction::class) {
+                synchronized(RommAppDb::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        Transaction::class.java,
+                        RommAppDb::class.java,
                         "webroom.db")
                         .fallbackToDestructiveMigration()
+                        .allowMainThreadQueries()
                         .build()
                 }
             }

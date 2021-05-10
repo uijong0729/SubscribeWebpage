@@ -8,29 +8,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.placeholder.PlaceholderContent
+import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.FragmentItemDetailBinding
+import com.example.subscribewebpage.vm.WebInfoViewModel
 
 /**
  * 리스트 중 하나를 클릭했을 때 표시되는 Fragment
  */
 class ItemDetailFragment : Fragment() {
 
-    private var item: PlaceholderContent.PlaceholderItem? = null
     lateinit var itemDetailTextView: TextView
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
 
+    // 데이터 바인딩 관련
+    private val viewModel = activity?.let { WebInfoViewModel(it.application) }
+    private var item: WebInfoEntity? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("[Debug]", "onCreate in ItemDetailFragment")
-
-        arguments?.let {
-            if (it.containsKey(Const.ARG_ITEM_ID)) {
-                // Load the placeholder content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-                item = PlaceholderContent.ITEM_MAP[it.getString(Const.ARG_ITEM_ID)]
+        val id: Int? = savedInstanceState?.getInt(Const.DETAIL_WEB_INFO_ID)
+        if (id != null) {
+            if (viewModel != null) {
+                item = viewModel.getWebInfo(id)
             }
         }
     }
@@ -45,12 +46,12 @@ class ItemDetailFragment : Fragment() {
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
 
-        binding.toolbarLayout?.title = item?.content
+        binding.toolbarLayout?.title = item?.title
 
         itemDetailTextView = binding.itemDetail
         // Show the placeholder content as text in a TextView.
         item?.let {
-            itemDetailTextView.text = it.details
+            itemDetailTextView.text = "${it.description}"
         }
 
         return rootView

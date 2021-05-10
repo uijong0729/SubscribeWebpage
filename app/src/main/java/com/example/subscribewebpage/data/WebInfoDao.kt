@@ -1,6 +1,5 @@
 package com.example.subscribewebpage.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -9,8 +8,11 @@ import androidx.room.Query
 interface WebInfoDao {
 
     @Query("SELECT * FROM WebInfo")
-    fun getAll(): List<WebInfo>
+    fun getAll(): List<WebInfoEntity>
+
+    @Query("SELECT * FROM WebInfo WHERE id = :infoKey")
+    fun getWebInfoById(infoKey: Int): WebInfoEntity
 
     @Insert
-    fun insertAll(vararg info: WebInfo)
+    fun insertAll(vararg info: WebInfoEntity)
 }

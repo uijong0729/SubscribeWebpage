@@ -1,63 +1,73 @@
 package com.example.subscribewebpage.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.subscribewebpage.Fragments.Adapters.SimpleItemRecyclerViewAdapter
+import com.example.subscribewebpage.Fragments.Adapters.RecyclerViewAdapter
 import com.example.subscribewebpage.R
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.placeholder.PlaceholderContent;
+import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.FragmentItemListBinding
+import com.example.subscribewebpage.vm.WebInfoViewModel
 
-class ItemListFragment : Fragment() {
+/**
+*   리스트를 표시하는 프래그먼트
+ *   https://www.youtube.com/watch?v=ARpn-1FPNE4&list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118
+**/
+class ItemListFragment : Fragment(), RecyclerViewAdapter.RowClickListener {
 
-    private var binded_list: FragmentItemListBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = binded_list!!
+    lateinit var viewModel: WebInfoViewModel
+    private var boundList: FragmentItemListBinding? = null
+    private val binding get() = boundList!!
 
     // onCreateView -> onViewCreated
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
-        binded_list = FragmentItemListBinding.inflate(inflater, container, false)
+        Log.d("[Debug]", "onCreateView in ItemListFragment")
+        boundList = FragmentItemListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView: RecyclerView = binding.itemList
-        val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
+        Log.d("[Debug]", "onViewCreated in ItemListFragment")
 
-        val onClickListener = View.OnClickListener { itemView ->
-            val item = itemView.tag as PlaceholderContent.PlaceholderItem
-            val bundle = Bundle()
-            bundle.putString(
-                    Const.ARG_ITEM_ID,
-                    item.id
-            )
-            if (itemDetailFragmentContainer != null) {
-                itemDetailFragmentContainer.findNavController()
-                        .navigate(R.id.fragment_item_detail, bundle)
-            } else {
-                itemView.findNavController().navigate(R.id.show_item_detail, bundle)
-            }
-        }
+        val recyclerViewAdapter = RecyclerViewAdapter(this)
+        viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
+        viewModel.getAllWebInfoObservers().observe(viewLifecycleOwner, Observer {
+            recyclerViewAdapter.setListDaa(ArrayList(it))
+            recyclerViewAdapter.notifyDataSetChanged()
+        })
 
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(
-            PlaceholderContent.ITEMS,
-            onClickListener
-        )
+        viewModel.getAllWebInfo()
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.item_list)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.adapter = recyclerViewAdapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binded_list = null
+        boundList = null
+    }
+
+    override fun onItemClickListener(WebInfo: WebInfoEntity, itemView: View){
+        val itemDetailFragmentContainer: View? = view?.findViewById(R.id.item_detail_nav_container)
+        val bundle = Bundle()
+        bundle.putInt(Const.DETAIL_WEB_INFO_ID, WebInfo.id)
+        if (itemDetailFragmentContainer != null) {
+            itemDetailFragmentContainer.findNavController().navigate(R.id.fragment_item_detail, bundle)
+        }else{
+            itemView.findNavController().navigate(R.id.show_item_detail, bundle)
+        }
     }
 }
