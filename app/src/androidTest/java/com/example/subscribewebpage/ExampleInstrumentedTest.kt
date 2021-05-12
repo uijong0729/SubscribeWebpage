@@ -2,7 +2,7 @@ package com.example.subscribewebpage
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.subscribewebpage.data.RommAppDb
+import com.example.subscribewebpage.data.Transaction
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -17,7 +17,7 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val transaction = RommAppDb.getInstance(context)
+        val transaction = Transaction.getInstance(context)
         val dao = transaction?.webInfoDao()
 //        dao?.insertAll(
 //            WebInfo("name ${Math.random()}" , "keyword", "url", 5, 20201231000000)

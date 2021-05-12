@@ -8,11 +8,11 @@ import androidx.room.Query
 interface WebInfoDao {
 
     @Query("SELECT * FROM WebInfo")
-    fun getAll(): List<WebInfoEntity>
+    fun getAll(): MutableList<WebInfoEntity>
 
     @Query("SELECT * FROM WebInfo WHERE id = :infoKey")
     fun getWebInfoById(infoKey: Int): WebInfoEntity
 
     @Insert
-    fun insertAll(vararg info: WebInfoEntity)
+    fun insert(info: WebInfoEntity)
 }

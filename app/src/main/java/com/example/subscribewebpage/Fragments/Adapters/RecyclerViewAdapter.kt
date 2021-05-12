@@ -12,7 +12,7 @@ class RecyclerViewAdapter(
     private val onClickListener: RowClickListener)
     :RecyclerView.Adapter<RecyclerViewAdapter.InfoViewHolder>() {
 
-    var items = ArrayList<WebInfoEntity>()
+    private var items = ArrayList<WebInfoEntity>()
 
     fun setListDaa(data: ArrayList<WebInfoEntity>){
         this.items = data

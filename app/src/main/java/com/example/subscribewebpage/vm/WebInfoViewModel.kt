@@ -1,12 +1,16 @@
 package com.example.subscribewebpage.vm
 
 import android.app.Application
-import androidx.annotation.NonNull
+import android.telecom.Call
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.subscribewebpage.data.RommAppDb
+import androidx.lifecycle.Observer
+import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfoEntity
+import kotlinx.coroutines.flow.callbackFlow
+import java.lang.Exception
+import java.util.concurrent.Callable
 import kotlin.concurrent.thread
 
 /**
@@ -15,23 +19,43 @@ import kotlin.concurrent.thread
  *
 */
 class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
-    var allWebInfo : MutableLiveData<List<WebInfoEntity>> = MutableLiveData()
 
-    fun getAllWebInfoObservers(): MutableLiveData<List<WebInfoEntity>>{
+    companion object{
+        var allWebInfo : MutableLiveData<MutableList<WebInfoEntity>> = MutableLiveData()
+    }
+
+    init {
+        getAllWebInfo()
+    }
+
+    fun getAllWebInfoObservers(): MutableLiveData<MutableList<WebInfoEntity>>{
         return allWebInfo
     }
 
     fun getAllWebInfo(){
         thread {
-            val list = RommAppDb.getInstance(getApplication())?.webInfoDao()?.getAll()
+            val list = Transaction.getInstance(getApplication())?.webInfoDao()?.getAll()
             allWebInfo.postValue(list)
         }
     }
 
-    fun getWebInfo(id :Int) = RommAppDb.getInstance(getApplication())?.webInfoDao()?.getWebInfoById(id)
-
-    fun insertWebInfo(vararg entity: WebInfoEntity){
-        RommAppDb.getInstance(getApplication())?.webInfoDao()?.insertAll(*entity)
+    fun callable(id: Int): Callable<WebInfoEntity?>? {
+        return Callable {
+            try {
+                Callable {
+                    Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoById(id)
+                }
+            }catch (e: Exception){
+                Log.e(this::class.java.name, e.localizedMessage)
+                throw e
+            }
+        }.call()
     }
+    fun getWebInfo(id :Int) = Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoById(id)
 
+    fun insertWebInfo(entity: WebInfoEntity) {
+        thread {
+            Transaction.getInstance(getApplication())?.webInfoDao()?.insert(entity)
+        }
+    }
 }
