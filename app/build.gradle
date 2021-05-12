@@ -33,7 +33,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-
 }
 
 dependencies {
@@ -48,7 +47,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
+
     testImplementation 'junit:junit:4.+'
+
+    // work manager
+    implementation 'androidx.work:work-runtime:2.4.0'
 
     // OKHTTP
     implementation 'io.github.rybalkinsd:kohttp:0.12.0'

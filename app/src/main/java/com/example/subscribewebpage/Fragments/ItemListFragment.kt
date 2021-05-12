@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.FragmentItemListBinding
 import com.example.subscribewebpage.vm.WebInfoViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
 *   리스트를 표시하는 프래그먼트
@@ -47,7 +49,7 @@ class ItemListFragment : Fragment(), RecyclerViewAdapter.RowClickListener {
         val recyclerView = view.findViewById<RecyclerView>(R.id.item_list)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = recyclerViewAdapter
-        
+
         // 뷰 모델 
         viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
         viewModel.getAllWebInfoObservers().observe(viewLifecycleOwner, Observer {
@@ -61,18 +63,11 @@ class ItemListFragment : Fragment(), RecyclerViewAdapter.RowClickListener {
         boundList = null
     }
 
-    override fun onItemClickListener(WebInfo: WebInfoEntity, itemView: View){
-        //val itemDetailFragmentContainer: View? = view?.findViewById(R.id.item_detail_nav_container)
-        //val bundle = Bundle()
-        //bundle.putInt(Const.DETAIL_WEB_INFO_ID, WebInfo.id)
+    override fun onItemClickListener(WebInfo: WebInfoEntity, itemView: View) {
+        // Pair : 2개의 값이 하나의 짝인 데이터 타입
+        // to : Pair 타입 데이터인 경우 A to B 구문으로 작성 가능
         val bundle = bundleOf(Const.DETAIL_WEB_INFO_ID to WebInfo.id )
         Log.d(Const.DEBUG_TAG, "webInfo id set : ${WebInfo.id}")
-        //if (itemDetailFragmentContainer != null) {
-        //    itemDetailFragmentContainer.findNavController().navigate(R.id.fragment_item_detail, bundle)
-        //}else{
-        //super.onSaveInstanceState(bundle)
-            itemView.findNavController().navigate(R.id.nav_detail_action, bundle)
-        //}
-
+        itemView.findNavController().navigate(R.id.nav_detail_action, bundle)
     }
 }

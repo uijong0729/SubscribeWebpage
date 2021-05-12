@@ -20,14 +20,70 @@
         app:navGraph="@navigation/primary_details_nav_graph"
         tools:layout="@layout/fragment_item_detail"/>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.circularreveal.CircularRevealFrameLayout
+        android:id="@+id/sheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:background="@android:color/transparent"
+        android:visibility="invisible"
+        app:layout_behavior="@string/fab_transformation_sheet_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="#2196F3"
+                android:padding="10dp"
+                android:text="@string/menu_add_observer" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="#FF9800"
+                android:padding="10dp"
+                android:text="@string/menu_modify_observer" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="#9C27B0"
+                android:padding="10dp"
+                android:text="@string/menu_delete_observer" />
+
+            <TextView
+                android:id="@+id/tvClose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="#9C27B0"
+                android:padding="10dp"
+                android:text="@string/menu_close_fab" />
+
+        </LinearLayout>
+    </com.google.android.material.circularreveal.CircularRevealFrameLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
         android:clickable="true"
         app:srcCompat="@android:drawable/ic_input_add"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </RelativeLayout>

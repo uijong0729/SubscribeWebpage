@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">SubscribeWebpage</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <string name="menu_add_observer">INSERT</string>
+    <string name="menu_delete_observer">DELETE</string>
+    <string name="menu_modify_observer">UPDATE</string>
+
+    <string name="menu_close_fab">CLOSE</string>
 </resources>
