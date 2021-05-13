@@ -1,5 +1,7 @@
 package com.example.subscribewebpage
 
+import com.example.subscribewebpage.common.Const
+import com.example.subscribewebpage.common.AppDateUtils
 import org.junit.Test
 
 /**
@@ -103,5 +105,9 @@ class GrammarReference {
         name.let {
             println("name size : $it ${it.length}")
         }
+    }
+
+    @Test fun getDate() {
+        print(Const.DEBUG_TAG + AppDateUtils.getStringDate())
     }
 }

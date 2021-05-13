@@ -3,7 +3,6 @@ package com.example.subscribewebpage
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -11,12 +10,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.subscribewebpage.common.AppDateUtils
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
 import com.example.subscribewebpage.vm.WebInfoViewModel
-import com.google.android.material.circularreveal.CircularRevealFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textview.MaterialTextView
 
 /**
  * 메인 액티비티
@@ -29,14 +27,6 @@ class ItemDetailHostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
-        //vm = WebInfoViewModel(this.application)
-        viewModel.insertWebInfo(WebInfoEntity(
-            title = "title",
-            description = "description",
-            keyword = "keyword",
-            url = "url",
-            interval = 15
-        ))
 
         // Log
         Log.d("[Debug]", "onCreate in ItemDetailHostActivity")
@@ -49,6 +39,9 @@ class ItemDetailHostActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        // 데이터 초기화
+        viewModel.getAllWebInfo()
+
         // 플로팅 버튼
         val floatingActionButton = findViewById<FloatingActionButton>(R.id.floatingActionButton)
         floatingActionButton.setOnClickListener {
@@ -59,6 +52,18 @@ class ItemDetailHostActivity : AppCompatActivity() {
         tvClose.setOnClickListener {
             floatingActionButton.isExpanded = false
         }
+
+        val tvWebInfoInsert = findViewById<TextView>(R.id.tvWebInfoInsert)
+        tvWebInfoInsert.setOnClickListener {
+            viewModel.insertWebInfo(WebInfoEntity(
+                title = "title",
+                description = "description",
+                keyword = "keyword",
+                url = "url",
+                interval = 15,
+                date = AppDateUtils.getStringDate()
+            ))
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -67,4 +72,5 @@ class ItemDetailHostActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
 }

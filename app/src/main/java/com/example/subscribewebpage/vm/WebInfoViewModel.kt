@@ -54,8 +54,10 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
     fun getWebInfo(id :Int) = Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoById(id)
 
     fun insertWebInfo(entity: WebInfoEntity) {
-        thread {
-            Transaction.getInstance(getApplication())?.webInfoDao()?.insert(entity)
-        }
+        Transaction.getInstance(getApplication())?.webInfoDao()?.insert(entity)
+    }
+
+    fun insertJustWebInfo(entity: WebInfoEntity) {
+        Transaction.getInstance(getApplication())?.webInfoDao()?.insert(entity)
     }
 }

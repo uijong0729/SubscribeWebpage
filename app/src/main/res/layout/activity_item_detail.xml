@@ -40,27 +40,30 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvWebInfoInsert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
                 android:background="#2196F3"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="@string/menu_add_observer" />
 
             <TextView
+                android:id="@+id/tvWebInfoUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
                 android:background="#FF9800"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="@string/menu_modify_observer" />
 
             <TextView
+                android:id="@+id/tvWebInfoDelete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
                 android:background="#9C27B0"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="@string/menu_delete_observer" />
 
             <TextView

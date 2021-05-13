@@ -1,11 +1,13 @@
 package com.example.subscribewebpage.data
 
 import android.content.Context
+import android.database.Cursor
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteQuery
 
-@Database(entities = [WebInfoEntity::class], version = 5)
+@Database(entities = [WebInfoEntity::class], version = 7)
 abstract class Transaction: RoomDatabase() {
     abstract fun webInfoDao(): WebInfoDao
 

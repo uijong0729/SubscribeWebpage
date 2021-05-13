@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,7 +18,6 @@ import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.FragmentItemListBinding
 import com.example.subscribewebpage.vm.WebInfoViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
 *   리스트를 표시하는 프래그먼트
@@ -46,15 +44,17 @@ class ItemListFragment : Fragment(), RecyclerViewAdapter.RowClickListener {
 
         // 리사이클러 뷰 (리스트)
         val recyclerViewAdapter = RecyclerViewAdapter(this)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.item_list)
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = recyclerViewAdapter
+        view.findViewById<RecyclerView>(R.id.item_list).also {
+            it.layoutManager = LinearLayoutManager(this.context)
+            it.adapter = recyclerViewAdapter
+        }
 
-        // 뷰 모델 
-        viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
-        viewModel.getAllWebInfoObservers().observe(viewLifecycleOwner, Observer {
-            recyclerViewAdapter.setListDaa(ArrayList(it))
-            recyclerViewAdapter.notifyDataSetChanged()
+        // 뷰 모델
+        ViewModelProvider(this)[WebInfoViewModel::class.java]
+            .getAllWebInfoObservers()
+            .observe(viewLifecycleOwner, Observer {
+                recyclerViewAdapter.setListDaa(ArrayList(it))
+                recyclerViewAdapter.notifyDataSetChanged()
         })
     }
 
