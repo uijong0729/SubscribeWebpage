@@ -14,6 +14,9 @@ interface WebInfoDao {
     @Query("SELECT * FROM WebInfo WHERE id = :infoKey")
     fun getWebInfoById(infoKey: Int): WebInfoEntity
 
+    @Query("SELECT * FROM WebInfo WHERE date = :date")
+    fun getWebInfoByDate(date: String): WebInfoEntity
+
     @Insert
     fun insert(info: WebInfoEntity)
 

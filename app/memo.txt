@@ -1,0 +1,5 @@
+https://hashcode.co.kr/questions/580/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%97%90%EC%84%9C-%EC%95%8C%EB%A6%BC%EC%9D%8C
+새로나온 NotificationCompat builder를 써봤는데요.
+진동하고 LED알림 표시는 했는데 알림음을 낼수가 없어요.
+
+Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION); builder.setSound(alarmSound);
