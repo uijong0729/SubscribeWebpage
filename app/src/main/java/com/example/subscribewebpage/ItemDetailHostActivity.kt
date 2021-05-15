@@ -20,6 +20,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.subscribewebpage.common.AppDateUtils
+import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
@@ -79,7 +80,8 @@ class ItemDetailHostActivity : AppCompatActivity() {
             )
         }
 
-        createNotification(this, 1, "title", "content")
+        // 알림
+        AppNotification.createNotification(this, 1, "title", "content")
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -88,51 +90,4 @@ class ItemDetailHostActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
-
-    fun createNotification(
-        context: Context,
-        id: Int,
-        title: String,
-        description: String
-    ) {
-        createNotificationChannel(title, description)
-
-        // Create an explicit intent for an Activity in your app
-        val intent = Intent(this, ItemDetailHostActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
-
-        var builder = NotificationCompat.Builder(context, Const.NOTIFICATION_CHANNEL_ID).apply {
-            this.priority = NotificationCompat.PRIORITY_DEFAULT
-            this.setSmallIcon(R.drawable.ic_launcher_foreground)
-            this.setContentTitle(title)
-            this.setContentText(description)
-            this.setContentIntent(pendingIntent)
-            this.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-        }
-
-        with(NotificationManagerCompat.from(this)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(id, builder.build())
-        }
-    }
-
-    private fun createNotificationChannel(
-        title: String,
-        des: String
-    ) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(Const.NOTIFICATION_CHANNEL_ID, title, importance).apply {
-                description = des
-            }
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-
 }
