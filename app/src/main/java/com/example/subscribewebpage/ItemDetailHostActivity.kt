@@ -1,18 +1,9 @@
 package com.example.subscribewebpage
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.media.RingtoneManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,7 +12,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.subscribewebpage.common.AppDateUtils
 import com.example.subscribewebpage.common.AppNotification
-import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.cron.SwWorkRequest
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
@@ -54,7 +44,9 @@ class ItemDetailHostActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // 데이터 초기화
-        viewModel.getAllWebInfo()
+        viewModel.getAllWebInfo().also {
+            SwWorkRequest.run(this)
+        }
 
         // 플로팅 버튼
         val floatingActionButton = findViewById<FloatingActionButton>(R.id.floatingActionButton)
@@ -80,12 +72,6 @@ class ItemDetailHostActivity : AppCompatActivity() {
                 )
             )
         }
-
-        // 알림
-        AppNotification.createNotification(this, 1, "title", "content")
-
-        // doWork
-        SwWorkRequest.run(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

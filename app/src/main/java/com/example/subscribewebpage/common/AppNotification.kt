@@ -7,17 +7,15 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.example.subscribewebpage.ItemDetailHostActivity
 import com.example.subscribewebpage.R
 
 object AppNotification {
 
     fun createNotification(
-        activity:AppCompatActivity,
+        context:Context,
         id: Int,
         title: String,
         des: String
@@ -29,16 +27,16 @@ object AppNotification {
             }
 
             val notificationManager: NotificationManager =
-                activity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
 
         // Create an explicit intent for an Activity in your app
-        val intent = Intent(activity, ItemDetailHostActivity::class.java).apply {
+        val intent = Intent(context, ItemDetailHostActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(activity, 0, intent, 0)
-        var builder = NotificationCompat.Builder(activity, Const.NOTIFICATION_CHANNEL_ID).apply {
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        var builder = NotificationCompat.Builder(context, Const.NOTIFICATION_CHANNEL_ID).apply {
             this.priority = NotificationCompat.PRIORITY_DEFAULT
             this.setSmallIcon(R.drawable.ic_launcher_foreground)
             this.setContentTitle(title)
@@ -47,7 +45,7 @@ object AppNotification {
             this.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
         }
 
-        with(NotificationManagerCompat.from(activity)) {
+        with(NotificationManagerCompat.from(context)) {
             // notificationId is a unique int for each notification that you must define
             notify(id, builder.build())
         }

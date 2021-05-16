@@ -1,17 +1,14 @@
 package com.example.subscribewebpage.vm
 
 import android.app.Application
-import android.telecom.Call
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfoEntity
-import kotlinx.coroutines.flow.callbackFlow
 import java.lang.Exception
 import java.util.concurrent.Callable
-import kotlin.concurrent.thread
+import java.util.stream.Collectors
 
 /**
  * <LiveData>
@@ -33,11 +30,9 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
         return allWebInfo
     }
 
-    fun getAllWebInfo(){
-        thread {
-            list = Transaction.getInstance(getApplication())?.webInfoDao()?.getAll()
-            allWebInfo.postValue(list)
-        }
+    fun getAllWebInfo() {
+        list = Transaction.getInstance(getApplication())?.webInfoDao()?.getAll()
+        allWebInfo.postValue(list)
     }
 
     fun callable(id: Int): Callable<WebInfoEntity?>? {
@@ -70,6 +65,14 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
             allWebInfo.value = list
         }
         return result
+    }
+
+    fun deleteWebInfo(entity: WebInfoEntity){
+        Transaction.getInstance(getApplication())?.webInfoDao()?.delete(entity)
+        list?.removeIf {
+            it -> it.id == entity.id
+        }
+        allWebInfo.value = list
     }
 
     fun insertJustWebInfo(entity: WebInfoEntity) {

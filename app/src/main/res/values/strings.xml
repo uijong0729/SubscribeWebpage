@@ -2,9 +2,9 @@
     <string name="app_name">SubscribeWebpage</string>
     <string name="title_item_detail">Item Detail</string>
 
-    <string name="menu_add_observer">INSERT</string>
-    <string name="menu_delete_observer">DELETE</string>
-    <string name="menu_modify_observer">UPDATE</string>
+    <string name="menu_add_observer">追加</string>
+    <string name="menu_delete_observer">削除</string>
+    <string name="menu_modify_observer">編集</string>
 
-    <string name="menu_close_fab">CLOSE</string>
+    <string name="menu_close_fab">閉じる</string>
 </resources>

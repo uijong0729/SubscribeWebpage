@@ -1,9 +1,6 @@
 package com.example.subscribewebpage.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface WebInfoDao {
@@ -22,4 +19,7 @@ interface WebInfoDao {
 
     @Update
     fun update(info: WebInfoEntity)
+
+    @Delete
+    fun delete(info: WebInfoEntity)
 }

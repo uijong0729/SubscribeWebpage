@@ -7,7 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteQuery
 
-@Database(entities = [WebInfoEntity::class], version = 7)
+@Database(entities = [WebInfoEntity::class], version = 9)
 abstract class Transaction: RoomDatabase() {
     abstract fun webInfoDao(): WebInfoDao
 

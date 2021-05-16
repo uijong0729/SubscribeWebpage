@@ -18,4 +18,15 @@ data class WebInfoEntity(
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+    @ColumnInfo(defaultValue = "")
+    var previousHtml: String = ""
+    @ColumnInfo(defaultValue = "")
+    var nextHtml: String = ""
+
+    override fun equals(other: Any?): Boolean {
+        if (other is WebInfoEntity){
+            return this.id == other.id
+        }
+        return false
+    }
 }
