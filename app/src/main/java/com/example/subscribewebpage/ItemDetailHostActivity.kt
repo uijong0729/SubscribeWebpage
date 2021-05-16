@@ -22,6 +22,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.subscribewebpage.common.AppDateUtils
 import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
+import com.example.subscribewebpage.cron.SwWorkRequest
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
 import com.example.subscribewebpage.vm.WebInfoViewModel
@@ -82,6 +83,9 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
         // 알림
         AppNotification.createNotification(this, 1, "title", "content")
+
+        // doWork
+        SwWorkRequest.run(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

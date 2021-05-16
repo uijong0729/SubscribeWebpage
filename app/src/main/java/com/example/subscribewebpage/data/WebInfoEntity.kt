@@ -11,7 +11,7 @@ data class WebInfoEntity(
     @ColumnInfo val description: String,
     @ColumnInfo val keyword: String,
     @ColumnInfo val url: String?,
-    @ColumnInfo val interval: Int?,
+    @ColumnInfo var interval: Long?,
     // 1 == true, 0 == false
     @ColumnInfo val enable: Int = 1,
     @ColumnInfo val date: String
