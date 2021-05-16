@@ -9,12 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import androidx.navigation.navArgs
 import com.example.subscribewebpage.R
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.WebInfoEntity
@@ -58,7 +54,7 @@ class ItemDetailFragment : Fragment() {
             // View bind
             binding.toolbarLayout?.title = item!!.title
             itemDetailTextView = binding.itemDetail.apply {
-                this.text = item?.description
+                this.text = item?.searchKeyword
             }
             itemDeleteButton = binding.itemDelete.apply {
                 this.setOnClickListener {

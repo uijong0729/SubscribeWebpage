@@ -37,7 +37,7 @@ class RecyclerViewAdapter(
         private val contentView: TextView = binding.keyword
         fun bind(data: WebInfoEntity){
             idView.text = data.title
-            contentView.text = data.keyword
+            contentView.text = data.cssQuery
         }
     }
 

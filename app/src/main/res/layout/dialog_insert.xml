@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#FFFFBB33"
+        android:contentDescription="@string/app_name"
+        android:gravity="center"
+        android:scaleType="center"
+        android:text="@string/dialog_title"
+        android:textColor="@color/light_blue"
+        android:textSize="26sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="識別名"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/add_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="キーワード"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/add_keyword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="URL"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/add_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif"
+                android:inputType="textUri" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CSSクエリ"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/add_query"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="通知間隔"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/add_interval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif"
+                android:inputType="text" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

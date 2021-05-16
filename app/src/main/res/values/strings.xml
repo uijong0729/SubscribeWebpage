@@ -6,5 +6,11 @@
     <string name="menu_delete_observer">削除</string>
     <string name="menu_modify_observer">編集</string>
 
+    <string name="menu_refresh_observer">再読み込み</string>
     <string name="menu_close_fab">閉じる</string>
+
+    <string name="dialog_title">新しいアラムを登録します</string>
+    <string name="dialog_ok">登録</string>
+    <string name="dialog_cancle">取消</string>
+
 </resources>

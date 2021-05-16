@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat
 @Entity(tableName = "WebInfo")
 data class WebInfoEntity(
     @ColumnInfo val title: String,
-    @ColumnInfo val description: String,
-    @ColumnInfo val keyword: String,
+    @ColumnInfo val searchKeyword: String,
+    @ColumnInfo val cssQuery: String,
     @ColumnInfo val url: String?,
     @ColumnInfo var interval: Long?,
     // 1 == true, 0 == false
