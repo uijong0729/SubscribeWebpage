@@ -1,6 +1,5 @@
 package com.example.subscribewebpage
 
-import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -11,12 +10,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.subscribewebpage.common.AppDateUtils
 import com.example.subscribewebpage.cron.SwWorkRequest
-import com.example.subscribewebpage.data.WebInfoEntity
+import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
 import com.example.subscribewebpage.vm.WebInfoViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlin.concurrent.thread
 
 
 /**
@@ -61,20 +60,14 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
         val tvWebInfoInsert = findViewById<TextView>(R.id.tvWebInfoInsert)
         tvWebInfoInsert.setOnClickListener {
-//            viewModel.insertWebInfo(
-//                WebInfoEntity(
-//                    title = "title",
-//                    searchKeyword = "description",
-//                    cssQuery = "keyword",
-//                    url = "url",
-//                    interval = 15,
-//                    date = AppDateUtils.getStringDate()
-//                )
-//            )
-
             val newFragment = SwInsertDialog()
             newFragment.show(supportFragmentManager, "swinsert")
+            thread {
+                Transaction.getInstance(this)?.autoFillDao()?.getAll()
+            }
         }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

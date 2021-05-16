@@ -13,4 +13,32 @@
     <string name="dialog_ok">登録</string>
     <string name="dialog_cancle">取消</string>
 
+    <string-array name="css_query_array">
+        <item>a[href^=</item>
+        <item>a[href$=</item>
+        <item>a[href*=</item>
+        <item>a[href~=</item>
+        <item>value</item>
+        <item>type</item>
+        <item>text</item>
+        <item>password</item>
+        <item>email</item>
+        <item>checkbox</item>
+        <item>file</item>
+        <item>submit</item>
+        <item>reset</item>
+        <item>button</item>
+        <item>hidden</item>
+        <item>textarea</item>
+        <item>option</item>
+        <item>div</item>
+        <item>ul</item>
+        <item>li</item>
+        <item>target</item>
+        <item>href</item>
+        <item>input</item>
+        <item>border</item>
+        <item>red</item>
+        <item>solid</item>
+    </string-array>
 </resources>

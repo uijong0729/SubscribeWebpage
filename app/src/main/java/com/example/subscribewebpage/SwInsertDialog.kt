@@ -3,23 +3,62 @@ package com.example.subscribewebpage
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.MultiAutoCompleteTextView
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.subscribewebpage.common.AppDateUtils
+import com.example.subscribewebpage.common.BlankTokenizer
+import com.example.subscribewebpage.common.Const.MINIMUM_INTERVAL
+import com.example.subscribewebpage.data.WebInfoEntity
+import com.example.subscribewebpage.vm.WebInfoViewModel
+import kotlin.concurrent.thread
 
 class SwInsertDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            // Get the layout inflater
             val inflater = requireActivity().layoutInflater;
+            val view :View = inflater.inflate(R.layout.dialog_insert, null)
 
-            // Inflate and set the layout for the dialog
-            // Pass null as the parent view because its going in the dialog layout
-            builder.setView(inflater.inflate(R.layout.dialog_insert, null))
-                // Add action buttons
+            // 자동완성
+            var textView : MultiAutoCompleteTextView = view.findViewById(R.id.add_query)
+            // <out String> : String 을 상속하고 있는 클래스타입 (제네릭 표현에서 사용)
+            val tags: Array<out String> = resources.getStringArray(R.array.css_query_array)
+            ArrayAdapter<String>(inflater.context, android.R.layout.simple_list_item_1, tags).also {adapter ->
+                //textView.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+                textView.setTokenizer(BlankTokenizer())
+                textView.setAdapter(adapter)
+            }
+
+            builder.setView(view)
                 .setPositiveButton(R.string.dialog_ok,
                     DialogInterface.OnClickListener { dialog, id ->
-                        // sign in the user ...
+                        val viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
+                        with (view){
+                            var interval:Long = getTextFromView(this, R.id.add_interval, true).toLong()
+                            if (interval < 15) {
+                                interval = MINIMUM_INTERVAL
+                            }
+
+                            thread {
+                                // 등록
+                                viewModel.insertWebInfo(
+                                    WebInfoEntity(
+                                        title = getTextFromView(this, R.id.add_title),
+                                        searchKeyword = getTextFromView(this, R.id.add_keyword),
+                                        cssQuery = textView.text.toString(),  //getTextFromView(this, R.id.add_query),
+                                        url = getTextFromView(this, R.id.add_url),
+                                        interval = interval,
+                                        date = AppDateUtils.getStringDate()
+                                    )
+                                )
+                            }
+                        }
                     })
                 .setNegativeButton(R.string.dialog_cancle,
                     DialogInterface.OnClickListener { dialog, id ->
@@ -29,4 +68,19 @@ class SwInsertDialog : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    private fun getTextFromView(view : View?, @IdRes id :Int):String {
+        var result :String = view?.findViewById<EditText>(id)?.text.toString()
+        if (result == null){
+            result = ""
+        }
+        return result
+    }
+
+    private fun getTextFromView(view : View?, @IdRes id :Int, isNumberFormat :Boolean):String {
+        var result :String = view?.findViewById<EditText>(id)?.text.toString()
+        if (isNumberFormat) {
+            result = "15"
+        }
+        return result
+    }
 }

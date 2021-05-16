@@ -7,11 +7,12 @@ import androidx.work.*
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
+import com.example.subscribewebpage.common.Const.MINIMUM_INTERVAL
 import com.example.subscribewebpage.vm.WebInfoViewModel
 import java.time.Duration
 
 object SwWorkRequest {
-    private const val MINIMUM_INTERVAL :Long = 15
+
 
     fun run(context: AppCompatActivity){
         val workManager = WorkManager.getInstance(context)
@@ -40,7 +41,7 @@ object SwWorkRequest {
     }
 
     class SwWorker(appContext: Context, workerParams: WorkerParameters): Worker(appContext, workerParams) {
-        val con :Context = appContext
+        private val con :Context = appContext
         override fun doWork(): Result {
             val data : String? = inputData.getString("aa")
             if (data != null) {

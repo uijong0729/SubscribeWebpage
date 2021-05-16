@@ -7,4 +7,6 @@ object Const {
 
     const val ERR_DB_DELETE = "情報取得に失敗しました"
     const val SUCCESS_DB_DELETE = "削除しました"
+
+    const val MINIMUM_INTERVAL :Long = 15
 }
