@@ -9,9 +9,10 @@
     <string name="menu_refresh_observer">再読み込み</string>
     <string name="menu_close_fab">閉じる</string>
 
-    <string name="dialog_title">新しいアラムを登録します</string>
+    <string name="dialog_title">必須入力項目</string>
+    <string name="dialog_optional_title">任意入力項目</string>
     <string name="dialog_ok">登録</string>
-    <string name="dialog_cancle">取消</string>
+    <string name="dialog_cancel">取消</string>
 
     <string-array name="css_query_array">
         <item>a[href^=</item>
@@ -32,13 +33,13 @@
         <item>textarea</item>
         <item>option</item>
         <item>div</item>
-        <item>ul</item>
-        <item>li</item>
         <item>target</item>
         <item>href</item>
         <item>input</item>
         <item>border</item>
         <item>red</item>
+        <item>blue</item>
+        <item>black</item>
         <item>solid</item>
     </string-array>
 </resources>

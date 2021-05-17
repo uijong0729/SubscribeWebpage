@@ -3,14 +3,12 @@ package com.example.subscribewebpage.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.text.SimpleDateFormat
 
 @Entity(tableName = "WebInfo")
 data class WebInfoEntity(
     @ColumnInfo val title: String,
     @ColumnInfo val searchKeyword: String,
-    @ColumnInfo val cssQuery: String,
-    @ColumnInfo val url: String?,
+    @ColumnInfo var url: String?,
     @ColumnInfo var interval: Long?,
     // 1 == true, 0 == false
     @ColumnInfo val enable: Int = 1,
@@ -18,10 +16,16 @@ data class WebInfoEntity(
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+
     @ColumnInfo(defaultValue = "")
     var previousHtml: String = ""
     @ColumnInfo(defaultValue = "")
-    var nextHtml: String = ""
+    var currentHtml: String = ""
+
+    @ColumnInfo(defaultValue = "")
+    var cssQuery: String = ""
+    @ColumnInfo(defaultValue = "")
+    var tagAttr: String = ""
 
     override fun equals(other: Any?): Boolean {
         if (other is WebInfoEntity){

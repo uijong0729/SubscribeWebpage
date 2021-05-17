@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [WebInfoEntity::class, AutoFillEntity::class], version = 1)
+@Database(entities = [WebInfoEntity::class, AutoFillEntity::class], version = 2)
 abstract class Transaction: RoomDatabase() {
     abstract fun webInfoDao(): WebInfoDao
     abstract fun autoFillDao(): AutoFillDao

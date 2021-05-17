@@ -44,6 +44,7 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
         // 데이터 초기화
         viewModel.getAllWebInfo().also {
+
             SwWorkRequest.run(this)
         }
 

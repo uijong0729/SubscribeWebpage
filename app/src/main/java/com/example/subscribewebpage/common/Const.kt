@@ -9,4 +9,9 @@ object Const {
     const val SUCCESS_DB_DELETE = "削除しました"
 
     const val MINIMUM_INTERVAL :Long = 15
+
+    const val NOTICE_KEY_DATA = "pass"
+    const val NOTICE_IS_UPDATED = "isUpdated"
+
+    const val NOTICE_UPDATE = "ウェブページが更新されました。"
 }

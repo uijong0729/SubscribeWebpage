@@ -20,6 +20,12 @@ interface WebInfoDao {
     @Update
     fun update(info: WebInfoEntity)
 
+    @Query("UPDATE WebInfo SET previousHtml = :html WHERE id = :id")
+    fun updateByIdToPreviousHtml(html: String, id: Int)
+
+    @Query("UPDATE WebInfo SET currentHtml = :html WHERE id = :id")
+    fun updateByIdToCurrentHtml(html: String, id: Int)
+
     @Delete
     fun delete(info: WebInfoEntity)
 }

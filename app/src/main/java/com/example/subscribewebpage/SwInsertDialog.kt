@@ -26,13 +26,16 @@ class SwInsertDialog : DialogFragment() {
             val view :View = inflater.inflate(R.layout.dialog_insert, null)
 
             // 자동완성
-            var textView : MultiAutoCompleteTextView = view.findViewById(R.id.add_query)
+            var tvCssQuery : MultiAutoCompleteTextView = view.findViewById(R.id.add_query)
+            var tvTagAttr : MultiAutoCompleteTextView = view.findViewById(R.id.add_tag_attr)
             // <out String> : String 을 상속하고 있는 클래스타입 (제네릭 표현에서 사용)
             val tags: Array<out String> = resources.getStringArray(R.array.css_query_array)
             ArrayAdapter<String>(inflater.context, android.R.layout.simple_list_item_1, tags).also {adapter ->
                 //textView.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
-                textView.setTokenizer(BlankTokenizer())
-                textView.setAdapter(adapter)
+                tvCssQuery.setTokenizer(BlankTokenizer())
+                tvCssQuery.setAdapter(adapter)
+                tvTagAttr.setTokenizer(BlankTokenizer())
+                tvTagAttr.setAdapter(adapter)
             }
 
             builder.setView(view)
@@ -51,16 +54,18 @@ class SwInsertDialog : DialogFragment() {
                                     WebInfoEntity(
                                         title = getTextFromView(this, R.id.add_title),
                                         searchKeyword = getTextFromView(this, R.id.add_keyword),
-                                        cssQuery = textView.text.toString(),  //getTextFromView(this, R.id.add_query),
                                         url = getTextFromView(this, R.id.add_url),
                                         interval = interval,
                                         date = AppDateUtils.getStringDate()
-                                    )
+                                    ).apply {
+                                        cssQuery = tvCssQuery.text.toString()
+                                        tagAttr = tvTagAttr.text.toString()
+                                    }
                                 )
                             }
                         }
                     })
-                .setNegativeButton(R.string.dialog_cancle,
+                .setNegativeButton(R.string.dialog_cancel,
                     DialogInterface.OnClickListener { dialog, id ->
                         getDialog()?.cancel()
                     })

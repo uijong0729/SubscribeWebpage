@@ -3,8 +3,10 @@ package com.example.subscribewebpage.vm
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.subscribewebpage.common.SaveType
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfoEntity
+import kotlin.concurrent.thread
 
 /**
  * <LiveData>
@@ -56,5 +58,16 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
             it -> it.id == entity.id
         }
         allWebInfo.value = list
+    }
+
+    fun updateWebInfo(entity: WebInfoEntity, type : SaveType){
+        val dao = Transaction.getInstance(getApplication())?.webInfoDao()
+        thread {
+            when(type){
+                SaveType.CURRENT -> dao?.updateByIdToCurrentHtml(entity.currentHtml, entity.id)
+                SaveType.PREVIOUS -> dao?.updateByIdToPreviousHtml(entity.currentHtml, entity.id)
+            }
+            getAllWebInfo()
+        }
     }
 }

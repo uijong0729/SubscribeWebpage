@@ -6,7 +6,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="30dp"
         android:background="#FFFFBB33"
         android:contentDescription="@string/app_name"
         android:gravity="center"
@@ -17,7 +17,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TableRow
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="キーワード"
+                android:text="検索語"
                 android:layout_margin="3dp"
                 android:background="#FFFFF3F2"
                 android:textSize="30sp" />
@@ -94,6 +94,23 @@
                 android:inputType="textUri" />
         </TableRow>
 
+    </TableLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#FFFFBB33"
+        android:contentDescription="@string/app_name"
+        android:gravity="center"
+        android:scaleType="center"
+        android:text="@string/dialog_optional_title"
+        android:textColor="@color/light_blue"
+        android:textSize="@dimen/normal_text_size" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
@@ -117,12 +134,31 @@
                 android:fontFamily="sans-serif"
                 android:textSize="@dimen/normal_text_size"
                 android:inputType="textAutoComplete" />
+        </TableRow>
 
-<!--            <AutoCompleteTextView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/autocomplete_css_query"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />-->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="タグ属性"
+                android:layout_margin="3dp"
+                android:background="#FFFFF3F2"
+                android:textSize="@dimen/normal_text_size"  />
+
+            <MultiAutoCompleteTextView
+                android:layout_weight="9"
+                android:id="@+id/add_tag_attr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_margin="3dp"
+                android:fontFamily="sans-serif"
+                android:textSize="@dimen/normal_text_size"
+                android:inputType="textAutoComplete" />
         </TableRow>
 
         <TableRow
@@ -150,5 +186,7 @@
                 android:textSize="@dimen/normal_text_size"
                 android:inputType="numberDecimal" />
         </TableRow>
+
     </TableLayout>
+
 </LinearLayout>
