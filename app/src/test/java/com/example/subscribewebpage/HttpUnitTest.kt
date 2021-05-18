@@ -1,15 +1,10 @@
 package com.example.subscribewebpage
 
 import io.github.rybalkinsd.kohttp.ext.httpGet
+import org.jsoup.Jsoup
 import org.junit.Test
 import java.net.HttpURLConnection
-import org.junit.Assert.*
 import java.net.URL
-import io.github.rybalkinsd.kohttp.dsl.httpGet
-import io.github.rybalkinsd.kohttp.ext.url
-import org.jsoup.Jsoup
-import org.jsoup.select.Elements
-import java.io.InputStream
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,7 +13,7 @@ import java.io.InputStream
  * See [OKHTTP](https://github.com/square/okhttp)
  */
 class HttpUnitTest {
-    var testUrl = "http://www.roue.co.jp/"
+    var testUrl = "https://www.naver.com/"
 
     @Test
     fun getHttp() {
@@ -60,13 +55,14 @@ class HttpUnitTest {
     fun getJsoup() {
         val border = "border: 3px red solid"
         val doc = Jsoup.connect(testUrl).get()
-        val elements = doc.select(".thumbnail")
+        val elements = doc.select("style"/*".thumbnail"*/)
         for (line in elements) {
-            if (line.attr("style").indexOf(border) > 0) {
-                println("## ${line.attr("href")} ")
-                println("## ${line.attr("style")} ")
-                println("## ${line.text()} ")
-            }
+            println(line.text())
+//            if (line.attr("style").indexOf(border) > 0) {
+//                println("## ${line.attr("href")} ")
+//                println("## ${line.attr("style")} ")
+//                println("## ${line.text()} ")
+//            }
         }
     }
 }

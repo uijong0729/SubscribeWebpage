@@ -1,4 +1,5 @@
 <resources>
+    <string name="service_description">事前に定義したURLから応答を求めるサービスです。</string>
     <string name="app_name">SubscribeWebpage</string>
     <string name="title_item_detail">Item Detail</string>
 

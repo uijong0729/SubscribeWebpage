@@ -22,7 +22,6 @@ import kotlin.concurrent.thread
  * 메인 액티비티
  */
 class ItemDetailHostActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewModel: WebInfoViewModel
 
@@ -44,8 +43,7 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
         // 데이터 초기화
         viewModel.getAllWebInfo().also {
-
-            SwWorkRequest.run(this)
+            SwWorkRequest.updateData(this)
         }
 
         // 플로팅 버튼

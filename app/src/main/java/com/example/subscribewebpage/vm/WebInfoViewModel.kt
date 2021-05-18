@@ -12,6 +12,8 @@ import kotlin.concurrent.thread
  * <LiveData>
  * @link https://developer.android.com/topic/libraries/architecture/livedata?hl=ko
  *
+ * 뷰 모델은 사용자 관점의 View 를 동기화하기 위한 클래스이므로 백그라운드 상의 갱신은 평범하게 room 의 dao 를 통해 접근할것
+ *
 */
 class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
 

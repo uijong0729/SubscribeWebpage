@@ -10,8 +10,10 @@ object Const {
 
     const val MINIMUM_INTERVAL :Long = 15
 
+    const val SW_UPDATE_WORKER_ID = "SW_UPDATE_WORKER_ID"
     const val NOTICE_KEY_DATA = "pass"
     const val NOTICE_IS_UPDATED = "isUpdated"
 
     const val NOTICE_UPDATE = "ウェブページが更新されました。"
+
 }
