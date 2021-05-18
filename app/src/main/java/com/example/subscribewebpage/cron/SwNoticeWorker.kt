@@ -8,6 +8,7 @@ import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.vm.WebInfoViewModel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
@@ -15,36 +16,38 @@ class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
     private val con: Context = appContext
 
     override fun doWork(): Result = runBlocking {
-        //=========== Data 취득 =============
-        val dao = Transaction.getInstance(con)?.webInfoDao()
-        WebInfoViewModel.list = dao?.getAll()
+        launch {
+            //=========== Data 취득 =============
+            val dao = Transaction.getInstance(con)?.webInfoDao()
+            WebInfoViewModel.list = dao?.getAll()
 
-        //=========== 값 비교를 위한 루프 =============
-        var isUpdated: Boolean = false
-        WebInfoViewModel.list?.stream()?.forEach { webInfo ->
-            if (webInfo != null) {
-                with(webInfo) {
-                    // == : 값 비교
-                    // === : 참조 비교
-                    if (this.previousHtml != this.currentHtml) {
-                        if (currentHtml.indexOf(this.searchKeyword, 0) > 0) {
-                            isUpdated = true
+            //=========== 값 비교를 위한 루프 =============
+            var isUpdated: Boolean = false
+            WebInfoViewModel.list?.stream()?.forEach { webInfo ->
+                if (webInfo != null) {
+                    with(webInfo) {
+                        // == : 값 비교
+                        // === : 참조 비교
+                        if (this.previousHtml != this.currentHtml) {
+                            if (currentHtml.indexOf(this.searchKeyword, 0) > 0) {
+                                isUpdated = true
+                            }
                         }
+
+                        Log.d(Const.DEBUG_TAG, this.title)
+                        Log.d(Const.DEBUG_TAG, this.id.toString())
+                        Log.d(Const.DEBUG_TAG, isUpdated.toString())
+
+                        if (isUpdated) {
+                            AppNotification.createNotification(
+                                con,
+                                this.id,
+                                title,
+                                Const.NOTICE_UPDATE
+                            )
+                        }
+
                     }
-
-                    Log.d(Const.DEBUG_TAG, this.title)
-                    Log.d(Const.DEBUG_TAG, this.id.toString())
-                    Log.d(Const.DEBUG_TAG, isUpdated.toString())
-
-                    if (isUpdated) {
-                        AppNotification.createNotification(
-                            con,
-                            this.id,
-                            title,
-                            Const.NOTICE_UPDATE
-                        )
-                    }
-
                 }
             }
         }
