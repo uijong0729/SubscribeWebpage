@@ -57,13 +57,27 @@
                 android:textIsSelectable="true"
                 tools:context="com.example.subscribewebpage.Fragments.ItemDetailFragment" />
 
-            <Button
-                android:id="@+id/item_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_gravity="right"
-                android:text="@string/menu_delete_observer"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/item_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="right"
+                        android:text="@string/menu_modify_observer"/>
+
+                    <Button
+                        android:id="@+id/item_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="right"
+                        android:text="@string/menu_delete_observer"/>
+
+                </LinearLayout>
             </LinearLayout>
 
         </ScrollView>

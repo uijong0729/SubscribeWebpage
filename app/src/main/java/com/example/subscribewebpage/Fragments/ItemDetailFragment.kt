@@ -1,17 +1,20 @@
 package com.example.subscribewebpage.Fragments
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.subscribewebpage.R
+import com.example.subscribewebpage.SwInsertActivity
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.FragmentItemDetailBinding
@@ -24,6 +27,7 @@ class ItemDetailFragment : Fragment() {
 
     private lateinit var itemDetailTextView: TextView
     private lateinit var itemDeleteButton: Button
+    private lateinit var itemUpdateButton: Button
     private lateinit var viewModel: WebInfoViewModel
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
@@ -36,6 +40,7 @@ class ItemDetailFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
 
         // view Model Access
         viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
@@ -47,31 +52,55 @@ class ItemDetailFragment : Fragment() {
             }
         }
 
-        _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
-        val rootView = binding.root
-
         if (item != null) {
             // View bind
             binding.toolbarLayout?.title = item!!.title
             itemDetailTextView = binding.itemDetail.apply {
                 this.text = item?.searchKeyword
             }
-            itemDeleteButton = binding.itemDelete.apply {
-                this.setOnClickListener {
-                    viewModel.deleteWebInfo(item!!)
-                    findNavController().navigate(R.id.item_list_fragment)
-                    Toast.makeText(this.context, Const.SUCCESS_DB_DELETE, Toast.LENGTH_LONG)
+
+            // 삭제 버튼
+            itemDeleteButton = binding.itemDelete.apply{
+                setOnClickListener {
+                    // 삭제 실행의 확인
+                    AlertDialog.Builder(this.context)
+                        .setTitle("削除の確認")
+                        .setMessage(R.string.dialog_question)
+                        .setPositiveButton(R.string.dialog_yes) { dialogInterface, i ->
+                            // 삭제 수행
+                            viewModel.deleteWebInfo(item!!)
+                            binding.itemDelete.findNavController().navigate(R.id.item_list_fragment)
+                            Toast.makeText(this@ItemDetailFragment.context, Const.SUCCESS_DB_DELETE, Toast.LENGTH_LONG).show()
+                        }
+                        .setNegativeButton(R.string.dialog_no) { dialogInterface, i ->
+                            Toast.makeText(this@ItemDetailFragment.context, "取り消しました", Toast.LENGTH_LONG).show()
+                        }
+                        .show()
                 }
             }
+            // 편집 버튼
+            itemUpdateButton = binding.itemUpdate.apply {
+                setOnClickListener {
+                    Toast.makeText(this@ItemDetailFragment.context, "UPDATE", Toast.LENGTH_LONG).show()
+                    val updateForIntent = Intent(this@ItemDetailFragment.context, SwInsertActivity::class.java)
+                    updateForIntent.putExtra("isInsert", false)
+                    updateForIntent.putExtra("id", id)
+                    startActivity(updateForIntent)
+                }
+            }
+
         }else {
             Toast.makeText(this.context, Const.ERR_DB_DELETE, Toast.LENGTH_LONG)
         }
-        return rootView
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id3: Int? = savedInstanceState?.getInt(Const.DETAIL_WEB_INFO_ID)
+
         Log.d("[Debug]", "view model id : $id3")
+
         super.onViewCreated(view, savedInstanceState)
     }
 

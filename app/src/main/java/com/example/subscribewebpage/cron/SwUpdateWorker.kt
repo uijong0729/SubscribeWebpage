@@ -3,12 +3,11 @@ package com.example.subscribewebpage.cron
 import android.content.Context
 import android.util.Log
 import androidx.work.*
+import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.vm.WebInfoViewModel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.jsoup.Jsoup
 import java.util.concurrent.TimeUnit
 
@@ -16,8 +15,8 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     private val context: Context = appContext
 
-    override fun doWork(): Result = runBlocking {
-        launch {
+    override fun doWork(): Result {
+        SwThreadPool.es.submit {
             val dao = Transaction.getInstance(context)?.webInfoDao()
             WebInfoViewModel.list = dao?.getAll()
             WebInfoViewModel.list?.stream()?.forEach { webInfo ->
@@ -72,7 +71,7 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
                 }
             }
         }
-        return@runBlocking Result.success()
+        return Result.success()
     }
 
     private fun setWebInfoHtml(webInfo: WebInfoEntity, str: String) {

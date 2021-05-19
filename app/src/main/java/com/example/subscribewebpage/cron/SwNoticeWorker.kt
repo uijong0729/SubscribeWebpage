@@ -4,19 +4,19 @@ import android.content.Context
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.vm.WebInfoViewModel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     private val con: Context = appContext
 
-    override fun doWork(): Result = runBlocking {
-        launch {
+    override fun doWork(): Result {
+
+        SwThreadPool.es.submit {
             //=========== Data 취득 =============
             val dao = Transaction.getInstance(con)?.webInfoDao()
             WebInfoViewModel.list = dao?.getAll()
@@ -51,6 +51,6 @@ class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
                 }
             }
         }
-        return@runBlocking Result.success()
+        return Result.success()
     }
 }

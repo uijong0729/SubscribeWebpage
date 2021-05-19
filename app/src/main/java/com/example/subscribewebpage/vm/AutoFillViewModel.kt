@@ -3,9 +3,9 @@ package com.example.subscribewebpage.vm
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.data.AutoFillEntity
 import com.example.subscribewebpage.data.Transaction
-import kotlin.concurrent.thread
 
 /**
  * <LiveData>
@@ -28,7 +28,7 @@ class AutoFillViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun getAllAutoFill() {
-        thread {
+        SwThreadPool.es.submit  {
             list = Transaction.getInstance(getApplication())?.autoFillDao()?.getAll()
             if (list!!.isNotEmpty()){
                 var tmpList = Array(list!!.size) { "" }
@@ -41,7 +41,7 @@ class AutoFillViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun insertAutoFill(entity: AutoFillEntity) {
-        thread {
+        SwThreadPool.es.submit  {
             Transaction.getInstance(getApplication())?.autoFillDao()?.insert(entity.keyword)
         }
     }

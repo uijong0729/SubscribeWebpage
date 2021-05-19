@@ -1,5 +1,6 @@
 package com.example.subscribewebpage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -11,11 +12,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.subscribewebpage.cron.SwWorkRequest
-import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
 import com.example.subscribewebpage.vm.WebInfoViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlin.concurrent.thread
 
 
 /**
@@ -59,13 +58,14 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
         val tvWebInfoInsert = findViewById<TextView>(R.id.tvWebInfoInsert)
         tvWebInfoInsert.setOnClickListener {
-            val newFragment = SwInsertDialog()
-            newFragment.show(supportFragmentManager, "swinsert")
-            thread {
-                Transaction.getInstance(this)?.autoFillDao()?.getAll()
-            }
+//            // 자동완성을 위한 리스트 작성
+//            SwThreadPool.es.submit {
+//                Transaction.getInstance(applicationContext)?.autoFillDao()?.getAll()
+//            }
+            val insertIntent = Intent(this@ItemDetailHostActivity, SwInsertActivity::class.java)
+            insertIntent.putExtra("isInsert", true)
+            startActivity(insertIntent)
         }
-
 
     }
 

@@ -54,7 +54,7 @@
                 android:text="検索語"
                 android:layout_margin="3dp"
                 android:background="#FFFFF3F2"
-                android:textSize="30sp" />
+                android:textSize="@dimen/normal_text_size" />
 
             <EditText
                 android:layout_weight="9"
@@ -80,7 +80,7 @@
                 android:text="URL"
                 android:layout_margin="3dp"
                 android:background="#FFFFF3F2"
-                android:textSize="30sp" />
+                android:textSize="@dimen/normal_text_size" />
 
             <EditText
                 android:layout_weight="9"
@@ -188,5 +188,28 @@
         </TableRow>
 
     </TableLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/item_insert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="right"
+            android:text="@string/menu_add_observer"/>
+
+        <Button
+            android:id="@+id/item_insert_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="right"
+            android:text="@string/dialog_cancel"/>
+
+    </LinearLayout>
 
 </LinearLayout>
