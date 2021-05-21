@@ -17,6 +17,7 @@
     <string name="dialog_cancel">取消</string>
 
     <string name="dialog_question">本当に行いますか？</string>
+    <string name="dialog_question_no">本当に取り消しますか？</string>
     <string name="dialog_yes">はい</string>
     <string name="dialog_no">いいえ</string>
 
@@ -48,4 +49,7 @@
         <item>black</item>
         <item>solid</item>
     </string-array>
+
+    <string name="TITLE_INSERT_PAGE">詳細ページ</string>
+    <string name="TITLE_LIST_PAGE">WEBモニタリング</string>
 </resources>

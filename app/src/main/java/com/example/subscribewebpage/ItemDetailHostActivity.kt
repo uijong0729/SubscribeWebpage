@@ -38,7 +38,7 @@ class ItemDetailHostActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
+        
         // 데이터 초기화
         viewModel.getAllWebInfo().also {
             SwWorkRequest.updateData(this)

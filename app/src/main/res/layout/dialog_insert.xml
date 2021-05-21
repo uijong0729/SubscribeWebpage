@@ -7,12 +7,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#FFFFBB33"
+        android:background="@color/purple_500"
         android:contentDescription="@string/app_name"
         android:gravity="center"
         android:scaleType="center"
         android:text="@string/dialog_title"
-        android:textColor="@color/light_blue"
+        android:textColor="@color/white"
         android:textSize="@dimen/normal_text_size" />
 
     <TableLayout
@@ -29,7 +29,6 @@
                     android:gravity="center_vertical"
                     android:text="識別名"
                     android:layout_margin="3dp"
-                    android:background="#FFFFF3F2"
                     android:textSize="@dimen/normal_text_size" />
 
                 <EditText
@@ -53,7 +52,6 @@
                 android:gravity="center_vertical"
                 android:text="検索語"
                 android:layout_margin="3dp"
-                android:background="#FFFFF3F2"
                 android:textSize="@dimen/normal_text_size" />
 
             <EditText
@@ -79,7 +77,6 @@
                 android:gravity="center_vertical"
                 android:text="URL"
                 android:layout_margin="3dp"
-                android:background="#FFFFF3F2"
                 android:textSize="@dimen/normal_text_size" />
 
             <EditText
@@ -97,14 +94,14 @@
     </TableLayout>
 
     <TextView
+        android:background="@color/purple_500"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#FFFFBB33"
         android:contentDescription="@string/app_name"
         android:gravity="center"
         android:scaleType="center"
         android:text="@string/dialog_optional_title"
-        android:textColor="@color/light_blue"
         android:textSize="@dimen/normal_text_size" />
 
     <TableLayout
@@ -121,7 +118,6 @@
                 android:gravity="center_vertical"
                 android:text="CSSクエリ"
                 android:layout_margin="3dp"
-                android:background="#FFFFF3F2"
                 android:textSize="@dimen/normal_text_size"  />
 
             <MultiAutoCompleteTextView
@@ -146,7 +142,6 @@
                 android:gravity="center_vertical"
                 android:text="タグ属性"
                 android:layout_margin="3dp"
-                android:background="#FFFFF3F2"
                 android:textSize="@dimen/normal_text_size"  />
 
             <MultiAutoCompleteTextView
@@ -172,7 +167,6 @@
                 android:gravity="center_vertical"
                 android:text="通知間隔"
                 android:layout_margin="3dp"
-                android:background="#FFFFF3F2"
                 android:textSize="@dimen/normal_text_size"  />
 
             <EditText

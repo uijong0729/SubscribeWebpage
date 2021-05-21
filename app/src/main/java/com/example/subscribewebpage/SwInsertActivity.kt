@@ -1,5 +1,6 @@
 package com.example.subscribewebpage
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -25,6 +26,7 @@ class SwInsertActivity : AppCompatActivity() {
 
         // 필드
         with(binding) {
+
             var intervalString:String = addInterval.text.toString()
             var intervalLong :Long = 0
             if (intervalString != null && intervalString != ""){
@@ -84,12 +86,21 @@ class SwInsertActivity : AppCompatActivity() {
                         }
                     )
                 }
-
+                finish()
             }
 
             // 취소
             itemInsertCancel.setOnClickListener {
-                this@SwInsertActivity.finish()
+                AlertDialog.Builder(this@SwInsertActivity)
+                    .setTitle("取り消しの確認")
+                    .setMessage(R.string.dialog_question_no)
+                    .setPositiveButton(R.string.dialog_yes) { dialogInterface, i ->
+                        this@SwInsertActivity.finish()
+                    }
+                    .setNegativeButton(R.string.dialog_no) { dialogInterface, i ->
+
+                    }
+                    .show()
             }
         }
 

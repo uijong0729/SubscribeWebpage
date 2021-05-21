@@ -26,6 +26,9 @@ interface WebInfoDao {
     @Query("UPDATE WebInfo SET currentHtml = :html WHERE id = :id")
     fun updateByIdToCurrentHtml(html: String, id: Int)
 
+    @Query("UPDATE WebInfo SET enable = :httpOk WHERE id = :id")
+    fun updateEnableRequest(httpOk: Int, id: Int)
+
     @Delete
     fun delete(info: WebInfoEntity)
 }

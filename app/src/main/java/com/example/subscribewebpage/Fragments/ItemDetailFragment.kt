@@ -42,41 +42,41 @@ class ItemDetailFragment : Fragment() {
         val id: Int? = arguments?.getInt(Const.DETAIL_WEB_INFO_ID)
         Log.d("[Debug]", "view model id : $id")
         if (id != null) {
-            if (viewModel != null) {
-                item = viewModel.getWebInfo(id)
-            }
+            item = viewModel.getWebInfo(id)
         }
 
         if (item != null) {
-            // View bind
-            binding.toolbarLayout?.title = item!!.title
-            binding.itemDetail.text = item?.searchKeyword
+            with (binding){
+                // View bind
+                toolbarLayout?.title = item!!.title
+                itemDetail.text = item?.searchKeyword
 
-            // 삭제 버튼
-            binding.itemDelete.setOnClickListener {
-                // 삭제 실행의 확인
-                AlertDialog.Builder(this.context)
-                    .setTitle("削除の確認")
-                    .setMessage(R.string.dialog_question)
-                    .setPositiveButton(R.string.dialog_yes) { dialogInterface, i ->
-                        // 삭제 수행
-                        viewModel.deleteWebInfo(item!!)
-                        binding.itemDelete.findNavController().navigate(R.id.item_list_fragment)
-                        Toast.makeText(this@ItemDetailFragment.context, Const.SUCCESS_DB_DELETE, Toast.LENGTH_LONG).show()
-                    }
-                    .setNegativeButton(R.string.dialog_no) { dialogInterface, i ->
-                        Toast.makeText(this@ItemDetailFragment.context, "取り消しました", Toast.LENGTH_LONG).show()
-                    }
-                    .show()
-            }
+                // 삭제 버튼
+                itemDelete.setOnClickListener {
+                    // 삭제 실행의 확인
+                    AlertDialog.Builder(this@ItemDetailFragment.context)
+                        .setTitle("削除の確認")
+                        .setMessage(R.string.dialog_question)
+                        .setPositiveButton(R.string.dialog_yes) { dialogInterface, i ->
+                            // 삭제 수행
+                            viewModel.deleteWebInfo(item!!)
+                            binding.itemDelete.findNavController().navigate(R.id.item_list_fragment)
+                            Toast.makeText(this@ItemDetailFragment.context, Const.SUCCESS_DB_DELETE, Toast.LENGTH_LONG).show()
+                        }
+                        .setNegativeButton(R.string.dialog_no) { dialogInterface, i ->
+                            Toast.makeText(this@ItemDetailFragment.context, "取り消しました", Toast.LENGTH_LONG).show()
+                        }
+                        .show()
+                }
 
-            // 편집 버튼
-            binding.itemUpdate.setOnClickListener {
+                // 편집 버튼
+                itemUpdate.setOnClickListener {
                     Toast.makeText(this@ItemDetailFragment.context, "UPDATE", Toast.LENGTH_LONG).show()
                     val updateForIntent = Intent(this@ItemDetailFragment.context, SwInsertActivity::class.java)
                     updateForIntent.putExtra("isInsert", false)
                     updateForIntent.putExtra("id", id)
                     startActivity(updateForIntent)
+                }
             }
         }else {
             Toast.makeText(this.context, Const.ERR_DB_DELETE, Toast.LENGTH_LONG)

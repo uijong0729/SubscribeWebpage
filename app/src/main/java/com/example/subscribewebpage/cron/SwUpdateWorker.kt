@@ -9,6 +9,8 @@ import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.vm.WebInfoViewModel
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
 class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
@@ -20,34 +22,45 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
             val dao = Transaction.getInstance(context)?.webInfoDao()
             WebInfoViewModel.list = dao?.getAll()
             WebInfoViewModel.list?.stream()?.forEach { webInfo ->
-                if (webInfo != null) {
+
                     with(webInfo) {
                         if (this.cssQuery.isNotEmpty()) {
                             if (this.url?.indexOf("https://", 0)!! == -1) {
                                 this.url = "https://" + this.url
                             }
 
+                            var doc: Document? = null
+
                             //Jsoup
-                            val doc = Jsoup.connect(this.url).get()
-                            val elements = doc.select(this.cssQuery)
-                            Log.d(Const.DEBUG_TAG, "cssQuery : " + this.cssQuery)
-                            Log.d(Const.DEBUG_TAG, "tagAttr : " + this.tagAttr)
-                            val sb = StringBuilder()
-                            for (line in elements) {
-                                if (this.tagAttr.isNotEmpty()) {
-                                    sb.append(line.attr(this.tagAttr).trim())
-                                } else {
-                                    sb.append(line.text().trim())
-                                }
+                            try {
+                                doc = Jsoup.connect(this.url).get()
+                            }catch (e: UnknownHostException){
+                                Log.d(Const.DEBUG_TAG, e.localizedMessage)
+                                dao?.updateEnableRequest(Const.DISABLE, webInfo.id)
+                                return@with
                             }
 
-                            val currentQueryResult = sb.toString()
+                            val elements = doc.select(this.cssQuery)
+                            Log.d(Const.DEBUG_TAG, "doc : $doc")
+                            Log.d(Const.DEBUG_TAG, "cssQuery : " + this.cssQuery)
+                            Log.d(Const.DEBUG_TAG, "tagAttr : " + this.tagAttr)
+                            val response = doc.html()
+                            val sb = StringBuilder(response.length)
+                            var currentQueryResult = ""
+                            if (this.tagAttr.isNotEmpty()) {
+                                for (line in elements) {
+                                    sb.append(line.attr(this.tagAttr).trim())
+                                }
+                                currentQueryResult = sb.toString()
+                            }else{
+                                currentQueryResult = response
+                            }
+
                             Log.d(Const.DEBUG_TAG, currentQueryResult)
                             setWebInfoHtml(this, currentQueryResult)
 
                             // 更新
                             dao?.updateByIdToPreviousHtml(this.currentHtml, this.id)
-
                             if (this.interval!! < Const.MINIMUM_INTERVAL) {
                                 this.interval = Const.MINIMUM_INTERVAL
                             }
@@ -65,10 +78,9 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
                                 this.date,
                                 ExistingPeriodicWorkPolicy.REPLACE, workRequest
                             )
-
                         }
                     }
-                }
+
             }
         }
         return Result.success()

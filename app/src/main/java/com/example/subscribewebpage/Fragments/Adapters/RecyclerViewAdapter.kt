@@ -3,7 +3,6 @@ package com.example.subscribewebpage.Fragments.Adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.ItemListContentBinding
@@ -32,12 +31,10 @@ class RecyclerViewAdapter(
 
     override fun getItemCount() = items.size
 
-    class InfoViewHolder(binding: ItemListContentBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val idView: TextView = binding.title
-        private val contentView: TextView = binding.keyword
+    class InfoViewHolder(private val binding: ItemListContentBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: WebInfoEntity){
-            idView.text = data.title
-            contentView.text = data.cssQuery
+            binding.title.text = data.title
+            binding.keyword.text = data.searchKeyword
         }
     }
 

@@ -54,7 +54,8 @@ class HttpUnitTest {
     @Test
     fun getJsoup() {
         val border = "border: 3px red solid"
-        val doc = Jsoup.connect(testUrl).get()
+        //val doc = Jsoup.connect(testUrl).get()
+        val doc = Jsoup.connect("https://a").get()
         val elements = doc.select("style"/*".thumbnail"*/)
         for (line in elements) {
             println(line.text())

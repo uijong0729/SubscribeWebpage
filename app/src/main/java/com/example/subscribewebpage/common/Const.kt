@@ -16,4 +16,7 @@ object Const {
 
     const val NOTICE_UPDATE = "ウェブページが更新されました。"
 
+    const val ENABLE = 1
+    const val DISABLE = 0
+
 }
