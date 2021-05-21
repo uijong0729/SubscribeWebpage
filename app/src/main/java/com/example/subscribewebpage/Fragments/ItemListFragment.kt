@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.subscribewebpage.Fragments.Adapters.RecyclerViewAdapter
 import com.example.subscribewebpage.R
 import com.example.subscribewebpage.common.Const
@@ -35,19 +34,11 @@ class ItemListFragment : Fragment(), RecyclerViewAdapter.RowClickListener {
             savedInstanceState: Bundle?): View? {
         Log.d("[Debug]", "onCreateView in ItemListFragment")
         boundList = FragmentItemListBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d("[Debug]", "onViewCreated in ItemListFragment")
 
         // 리사이클러 뷰 (리스트)
         val recyclerViewAdapter = RecyclerViewAdapter(this)
-        view.findViewById<RecyclerView>(R.id.item_list).also {
-            it.layoutManager = LinearLayoutManager(this.context)
-            it.adapter = recyclerViewAdapter
-        }
+        binding.itemList.layoutManager = LinearLayoutManager(this.context)
+        binding.itemList.adapter = recyclerViewAdapter
 
         // 뷰 모델
         ViewModelProvider(this)[WebInfoViewModel::class.java]
@@ -55,7 +46,12 @@ class ItemListFragment : Fragment(), RecyclerViewAdapter.RowClickListener {
             .observe(viewLifecycleOwner, Observer {
                 recyclerViewAdapter.setListDaa(ArrayList(it))
                 recyclerViewAdapter.notifyDataSetChanged()
-        })
+            })
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {

@@ -3,7 +3,6 @@ package com.example.subscribewebpage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -14,7 +13,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.subscribewebpage.cron.SwWorkRequest
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
 import com.example.subscribewebpage.vm.WebInfoViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 /**
@@ -31,8 +29,9 @@ class ItemDetailHostActivity : AppCompatActivity() {
         // Log
         Log.d("[Debug]", "onCreate in ItemDetailHostActivity")
 
+        // viewBinding
+        // https://tourspace.tistory.com/314
         val binding = ActivityItemDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_item_detail) as NavHostFragment
@@ -45,28 +44,30 @@ class ItemDetailHostActivity : AppCompatActivity() {
             SwWorkRequest.updateData(this)
         }
 
-        // 플로팅 버튼
-        val floatingActionButton = findViewById<FloatingActionButton>(R.id.floatingActionButton)
-        floatingActionButton.setOnClickListener {
-            floatingActionButton.isExpanded = true
-        }
+        // view binding 적용
+        with (binding){
+            // 플로팅 버튼
+            floatingActionButton.setOnClickListener {
+                floatingActionButton.isExpanded = true
+            }
 
-        val tvClose = findViewById<TextView>(R.id.tvClose)
-        tvClose.setOnClickListener {
-            floatingActionButton.isExpanded = false
-        }
+            tvClose.setOnClickListener {
+                floatingActionButton.isExpanded = false
+            }
 
-        val tvWebInfoInsert = findViewById<TextView>(R.id.tvWebInfoInsert)
-        tvWebInfoInsert.setOnClickListener {
+            tvWebInfoInsert.setOnClickListener {
 //            // 자동완성을 위한 리스트 작성
 //            SwThreadPool.es.submit {
 //                Transaction.getInstance(applicationContext)?.autoFillDao()?.getAll()
 //            }
-            val insertIntent = Intent(this@ItemDetailHostActivity, SwInsertActivity::class.java)
-            insertIntent.putExtra("isInsert", true)
-            startActivity(insertIntent)
+                val insertIntent = Intent(this@ItemDetailHostActivity, SwInsertActivity::class.java)
+                insertIntent.putExtra("isInsert", true)
+                startActivity(insertIntent)
+            }
         }
 
+        // viewBinding 사용시 bind.root를 인수로 넘기는 것은 필수
+        setContentView(binding.root)
     }
 
     override fun onSupportNavigateUp(): Boolean {
