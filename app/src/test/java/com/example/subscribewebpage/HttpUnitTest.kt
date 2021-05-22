@@ -36,7 +36,9 @@ class HttpUnitTest {
     // https://github.com/square/okhttp
     @Test
     fun getOkHttp() {
-        val response = testUrl.httpGet()
+        //java.lang.IllegalArgumentException
+        //java.net.UnknownHostException
+        val response = "http://asdf".httpGet()
         if (response.body() != null){
 //            response.body()!!.byteStream().bufferedReader(Charsets.UTF_8).use {
 //                it.lines().forEach {

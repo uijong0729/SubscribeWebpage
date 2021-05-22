@@ -15,6 +15,7 @@ object Const {
     const val NOTICE_IS_UPDATED = "isUpdated"
 
     const val NOTICE_UPDATE = "ウェブページが更新されました。"
+    const val UPDATE_ERROR = "URLの入力が正しくありません。「編集」ボタンで正しく入力してください。"
 
     const val ENABLE = 1
     const val DISABLE = 0

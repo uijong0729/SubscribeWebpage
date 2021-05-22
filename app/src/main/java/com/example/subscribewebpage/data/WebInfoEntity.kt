@@ -11,7 +11,7 @@ data class WebInfoEntity(
     @ColumnInfo var url: String?,
     @ColumnInfo var interval: Long?,
     // 1 == true, 0 == false
-    @ColumnInfo val enable: Int = 1,
+    @ColumnInfo var enable: Int = 1,
     @ColumnInfo val date: String
 ){
     @PrimaryKey(autoGenerate = true)

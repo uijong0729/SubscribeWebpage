@@ -52,4 +52,5 @@
 
     <string name="TITLE_INSERT_PAGE">詳細ページ</string>
     <string name="TITLE_LIST_PAGE">WEBモニタリング</string>
+    <string name="https">https://</string>
 </resources>

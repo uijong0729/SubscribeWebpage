@@ -28,7 +28,7 @@ class ItemDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     // 데이터 바인딩 관련
-    private var item: WebInfoEntity? = null
+    private var webInfo: WebInfoEntity? = null
 
     // onCreateView -> onViewCreated
     override fun onCreateView(
@@ -42,14 +42,20 @@ class ItemDetailFragment : Fragment() {
         val id: Int? = arguments?.getInt(Const.DETAIL_WEB_INFO_ID)
         Log.d("[Debug]", "view model id : $id")
         if (id != null) {
-            item = viewModel.getWebInfo(id)
+            webInfo = viewModel.getWebInfo(id)
         }
 
-        if (item != null) {
+        if (webInfo != null) {
             with (binding){
                 // View bind
-                toolbarLayout?.title = item!!.title
-                itemDetail.text = item?.searchKeyword
+                toolbarLayout.title = webInfo!!.title
+                if (webInfo!!.enable == Const.ENABLE) {
+                    itemDetail.text = webInfo?.searchKeyword
+                }else{
+                    itemDetail.text = Const.UPDATE_ERROR
+                }
+                // url 표시
+                itemDetailUrl.text = webInfo!!.url
 
                 // 삭제 버튼
                 itemDelete.setOnClickListener {
@@ -57,13 +63,13 @@ class ItemDetailFragment : Fragment() {
                     AlertDialog.Builder(this@ItemDetailFragment.context)
                         .setTitle("削除の確認")
                         .setMessage(R.string.dialog_question)
-                        .setPositiveButton(R.string.dialog_yes) { dialogInterface, i ->
+                        .setPositiveButton(R.string.dialog_yes) { _, _ ->
                             // 삭제 수행
-                            viewModel.deleteWebInfo(item!!)
+                            viewModel.deleteWebInfo(webInfo!!)
                             binding.itemDelete.findNavController().navigate(R.id.item_list_fragment)
                             Toast.makeText(this@ItemDetailFragment.context, Const.SUCCESS_DB_DELETE, Toast.LENGTH_LONG).show()
                         }
-                        .setNegativeButton(R.string.dialog_no) { dialogInterface, i ->
+                        .setNegativeButton(R.string.dialog_no) { _, _ ->
                             Toast.makeText(this@ItemDetailFragment.context, "取り消しました", Toast.LENGTH_LONG).show()
                         }
                         .show()

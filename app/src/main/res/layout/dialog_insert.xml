@@ -88,6 +88,7 @@
                 android:layout_margin="3dp"
                 android:fontFamily="sans-serif"
                 android:textSize="@dimen/normal_text_size"
+                android:text="https://"
                 android:inputType="textUri" />
         </TableRow>
 

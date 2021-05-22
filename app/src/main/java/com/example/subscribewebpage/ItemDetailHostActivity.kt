@@ -64,6 +64,12 @@ class ItemDetailHostActivity : AppCompatActivity() {
                 insertIntent.putExtra("isInsert", true)
                 startActivity(insertIntent)
             }
+
+            tvWebInfoRefresh.setOnClickListener {
+                viewModel.getAllWebInfo().also {
+                    SwWorkRequest.updateData(this@ItemDetailHostActivity)
+                }
+            }
         }
 
         // viewBinding 사용시 bind.root를 인수로 넘기는 것은 필수

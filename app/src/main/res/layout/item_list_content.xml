@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -10,6 +9,7 @@
         android:background="@drawable/border"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -27,6 +27,17 @@
             android:layout_height="30dp"
             android:layout_margin="@dimen/text_margin"
             android:textAppearance="?attr/textAppearanceListItem" />
+
+        <ImageView
+            android:id="@+id/enableRequest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@mipmap/pause"
+            android:visibility="invisible"
+            />
 
     </LinearLayout>
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.example.subscribewebpage.cron
 
 import android.content.Context
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.subscribewebpage.SwThreadPool
@@ -33,10 +32,6 @@ class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
                                 isUpdated = true
                             }
                         }
-
-                        Log.d(Const.DEBUG_TAG, this.title)
-                        Log.d(Const.DEBUG_TAG, this.id.toString())
-                        Log.d(Const.DEBUG_TAG, isUpdated.toString())
 
                         if (isUpdated) {
                             AppNotification.createNotification(
