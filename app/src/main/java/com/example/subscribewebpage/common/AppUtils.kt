@@ -1,13 +1,9 @@
 package com.example.subscribewebpage.common
 
-import java.lang.StringBuilder
-import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
-object AppDateUtils {
+object AppUtils {
     fun getStringDate():String{
         ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).also {
             val sb = StringBuilder()

@@ -41,6 +41,8 @@ class ItemListFragment : Fragment(), RecyclerViewAdapter.RowClickListener {
         binding.itemList.adapter = recyclerViewAdapter
 
         // 뷰 모델
+        val viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
+
         ViewModelProvider(this)[WebInfoViewModel::class.java]
             .getAllWebInfoObservers()
             .observe(viewLifecycleOwner, Observer {

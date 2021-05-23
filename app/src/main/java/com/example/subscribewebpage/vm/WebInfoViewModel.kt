@@ -17,16 +17,29 @@ import com.example.subscribewebpage.data.WebInfoEntity
 */
 class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
 
+//    val currentWebInfo : MutableLiveData<WebInfoEntity> by lazy {
+//        MutableLiveData<WebInfoEntity>()
+//    }
+//
+//    val allWebInfo : MutableLiveData<MutableList<WebInfoEntity>> by lazy {
+//        MutableLiveData()
+//    }
+
     companion object{
-        var allWebInfo : MutableLiveData<MutableList<WebInfoEntity>> = MutableLiveData()
         var list:MutableList<WebInfoEntity>? = null
+        val currentWebInfo : MutableLiveData<WebInfoEntity> by lazy {
+            MutableLiveData<WebInfoEntity>()
+        }
+        val allWebInfo : MutableLiveData<MutableList<WebInfoEntity>> by lazy {
+            MutableLiveData()
+        }
     }
 
     init {
         getAllWebInfo()
     }
 
-    fun getAllWebInfoObservers(): MutableLiveData<MutableList<WebInfoEntity>>{
+    fun getAllWebInfoObservers(): MutableLiveData<MutableList<WebInfoEntity>> {
         return allWebInfo
     }
 
@@ -35,7 +48,13 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
         allWebInfo.postValue(list)
     }
 
-    fun getWebInfo(id :Int): WebInfoEntity? = Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoById(id)
+    fun getWebInfo(id :Int): WebInfoEntity? {
+        val obj = Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoById(id)
+        if (obj != null){
+            currentWebInfo.postValue(obj)
+        }
+        return obj
+    }
 
     private fun getWebInfoByDate(date :String):WebInfoEntity? = Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoByDate(date)
 
@@ -62,13 +81,23 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
         allWebInfo.value = list
     }
 
-    fun updateWebInfo(entity: WebInfoEntity, type : SaveType){
+    fun updateWebInfoHtml(entity: WebInfoEntity, type : SaveType){
         val dao = Transaction.getInstance(getApplication())?.webInfoDao()
         SwThreadPool.es.submit  {
             when(type){
                 SaveType.CURRENT -> dao?.updateByIdToCurrentHtml(entity.currentHtml, entity.id)
                 SaveType.PREVIOUS -> dao?.updateByIdToPreviousHtml(entity.currentHtml, entity.id)
             }
+            getAllWebInfo()
+            //allWebInfo.postValue(list)
+        }
+    }
+
+    fun updateWebInfo(entity: WebInfoEntity){
+        val dao = Transaction.getInstance(getApplication())?.webInfoDao()
+        SwThreadPool.es.submit  {
+            dao?.update(entity)
+            currentWebInfo.postValue(entity)
             getAllWebInfo()
         }
     }

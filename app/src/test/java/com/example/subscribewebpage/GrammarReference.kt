@@ -1,7 +1,7 @@
 package com.example.subscribewebpage
 
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.common.AppDateUtils
+import com.example.subscribewebpage.common.AppUtils
 import org.junit.Test
 
 /**
@@ -108,6 +108,6 @@ class GrammarReference {
     }
 
     @Test fun getDate() {
-        print(Const.DEBUG_TAG + AppDateUtils.getStringDate())
+        print(Const.DEBUG_TAG + AppUtils.getStringDate())
     }
 }

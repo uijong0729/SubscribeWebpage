@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.subscribewebpage.R
@@ -41,21 +42,36 @@ class ItemDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this)[WebInfoViewModel::class.java]
         val id: Int? = arguments?.getInt(Const.DETAIL_WEB_INFO_ID)
         Log.d("[Debug]", "view model id : $id")
-        if (id != null) {
-            webInfo = viewModel.getWebInfo(id)
-        }
-
-        if (webInfo != null) {
-            with (binding){
+        val webInfoObserver = Observer<WebInfoEntity> { obj ->
+            with(binding){
                 // View bind
-                toolbarLayout.title = webInfo!!.title
-                if (webInfo!!.enable == Const.ENABLE) {
-                    itemDetail.text = webInfo?.searchKeyword
+                toolbarLayout.title = obj!!.title
+                if (obj.enable == Const.ENABLE) {
+                    itemDetail.text = obj.searchKeyword
                 }else{
                     itemDetail.text = Const.UPDATE_ERROR
                 }
                 // url 표시
-                itemDetailUrl.text = webInfo!!.url
+                itemDetailUrl.text = obj.url
+            }
+        }
+        // 갱신
+        if (id != null) {
+            webInfo = viewModel.getWebInfo(id)
+        }
+        WebInfoViewModel.currentWebInfo.observe(this.viewLifecycleOwner, webInfoObserver)
+
+        if (webInfo != null) {
+            with (binding){
+//                // View bind
+//                toolbarLayout.title = webInfo!!.title
+//                if (webInfo!!.enable == Const.ENABLE) {
+//                    itemDetail.text = webInfo?.searchKeyword
+//                }else{
+//                    itemDetail.text = Const.UPDATE_ERROR
+//                }
+//                // url 표시
+//                itemDetailUrl.text = webInfo!!.url
 
                 // 삭제 버튼
                 itemDelete.setOnClickListener {

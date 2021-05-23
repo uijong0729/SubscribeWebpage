@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.subscribewebpage.common.AppDateUtils
+import com.example.subscribewebpage.common.AppUtils
 import com.example.subscribewebpage.common.BlankTokenizer
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.WebInfoEntity
@@ -21,6 +21,10 @@ import java.util.concurrent.Callable
 // 하위버전 지원하지 않음 : Activity
 class SwInsertActivity : AppCompatActivity() {
 
+    // 데이터 갱신
+    // https://patents.google.com/patent/KR101310954B1/
+    // RSS는 일부 사이트에서만 이용
+    // 댓글/메일 알림등도 해당 사이트에서만 국한됨
     override fun onCreate(savedInstanceState: Bundle?) {
         // 데이터 바인딩
         val binding = DialogInsertBinding.inflate(layoutInflater)
@@ -56,8 +60,69 @@ class SwInsertActivity : AppCompatActivity() {
                             addInterval.setText(entity.interval.toString())
                         }
                     }
-                } else {
+                }
+            }
+
+            // 갱신 및 추가
+            itemInsert.setOnClickListener {
+                val url = addUrl.text.toString()
+                val inspectUrl: Boolean = SwThreadPool.es.submit(Callable {
+                    try {
+                        url.httpGet()
+                        //java.lang.IllegalArgumentException
+                        //java.net.UnknownHostException
+                        return@Callable true
+                    } catch (e: Exception) {
+                        when (e) {
+                            is IllegalArgumentException -> return@Callable false
+                            is UnknownHostException -> return@Callable false
+                        }
+                        Log.d(Const.DEBUG_TAG, e.localizedMessage)
+                        return@Callable true
+                    }
+                }).get()
+
+                Log.d(Const.DEBUG_TAG, "inspectUrl : $inspectUrl")
+
+                if (inspectUrl) {
+                    val insertId = intent.getIntExtra("id", 0)
+                    val isInsert = intent.getBooleanExtra("isInsert", true)
+                    SwThreadPool.es.submit {
+                        if (isInsert) {
+                            // 등록
+                            viewModel.insertWebInfo(
+                                WebInfoEntity(
+                                    title = addTitle.text.toString(),
+                                    searchKeyword = addKeyword.text.toString(),
+                                    url = addUrl.text.toString(),
+                                    interval = intervalLong,
+                                    date = AppUtils.getStringDate()
+                                ).apply {
+                                    cssQuery = addQuery.text.toString()
+                                    tagAttr = addTagAttr.text.toString()
+                                }
+                            )
+                        }else{
+                            val entity = WebInfoEntity(
+                                title = addTitle.text.toString(),
+                                searchKeyword = addKeyword.text.toString(),
+                                url = addUrl.text.toString(),
+                                interval = intervalLong,
+                                date = AppUtils.getStringDate()
+                            )
+                            with(entity){
+                                cssQuery = addQuery.text.toString()
+                                tagAttr = addTagAttr.text.toString()
+                                id = insertId
+                                enable = Const.ENABLE
+                            }
+                            // 갱신
+                            viewModel.updateWebInfo(entity)
+                        }
+                    }
                     finish()
+                }else{
+                    Toast.makeText(applicationContext, "URL情報が取得できません", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -73,47 +138,6 @@ class SwInsertActivity : AppCompatActivity() {
                 addQuery.setAdapter(adapter)
                 addTagAttr.setTokenizer(BlankTokenizer())
                 addTagAttr.setAdapter(adapter)
-            }
-
-            // 추가
-            itemInsert.setOnClickListener {
-                val url = addUrl.text.toString()
-                val inspectUrl: Boolean = SwThreadPool.es.submit(Callable {
-                    try {
-                        url.httpGet()
-                        //java.lang.IllegalArgumentException
-                        //java.net.UnknownHostException
-                        return@Callable true
-                    } catch (e: Exception) {
-                        when (e) {
-                            is IllegalArgumentException -> return@Callable false
-                            is UnknownHostException -> return@Callable false
-                        }
-                        Log.d(Const.DEBUG_TAG, e.localizedMessage)
-                    }
-                    return@Callable false
-                }).get()
-
-                if (inspectUrl) {
-                    SwThreadPool.es.submit {
-                        // 등록
-                        viewModel.insertWebInfo(
-                            WebInfoEntity(
-                                title = addTitle.text.toString(),
-                                searchKeyword = addKeyword.text.toString(),
-                                url = addUrl.text.toString(),
-                                interval = intervalLong,
-                                date = AppDateUtils.getStringDate()
-                            ).apply {
-                                cssQuery = addQuery.text.toString()
-                                tagAttr = addTagAttr.text.toString()
-                            }
-                        )
-                        finish()
-                    }
-                }else{
-                    Toast.makeText(applicationContext, "URL情報が取得できません", Toast.LENGTH_LONG).show()
-                }
             }
 
             // 취소
