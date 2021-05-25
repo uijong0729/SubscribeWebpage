@@ -13,7 +13,6 @@ import com.example.subscribewebpage.data.Transaction
  *
 */
 class AutoFillViewModel(app: Application) : AndroidViewModel(app) {
-
     companion object{
         var liveAutoFill : MutableLiveData<Array<String>> = MutableLiveData()
         var list:List<AutoFillEntity>? = null

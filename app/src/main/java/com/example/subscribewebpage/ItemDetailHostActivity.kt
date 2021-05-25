@@ -40,8 +40,8 @@ class ItemDetailHostActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         
         // 데이터 초기화
-        viewModel.getAllWebInfo().also {
-            SwWorkRequest.updateData(this)
+        viewModel.getAllWebInfo().invokeOnCompletion {
+            SwWorkRequest.updateData(this@ItemDetailHostActivity)
         }
 
         // view binding 적용
@@ -66,7 +66,7 @@ class ItemDetailHostActivity : AppCompatActivity() {
             }
 
             tvWebInfoRefresh.setOnClickListener {
-                viewModel.getAllWebInfo().also {
+                viewModel.getAllWebInfo().invokeOnCompletion {
                     SwWorkRequest.updateData(this@ItemDetailHostActivity)
                 }
             }

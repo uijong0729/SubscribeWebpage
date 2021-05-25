@@ -12,6 +12,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import java.net.UnknownHostException
+import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 
 class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
@@ -19,9 +20,11 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
     private val context: Context = appContext
 
     override fun doWork(): Result {
-        SwThreadPool.es.submit {
+
+        var getResult : Result? = SwThreadPool.es.submit(Callable {
             val dao = Transaction.getInstance(context)?.webInfoDao()
-            Log.d(Const.DEBUG_TAG, "do work update size : ${WebInfoViewModel.list!!.size}")
+            WebInfoViewModel.list = dao?.getAll()
+            Log.d(Const.DEBUG_TAG, "Start Update Worker. do work update size : ${WebInfoViewModel.list!!.size}")
             WebInfoViewModel.list?.stream()?.forEach { webInfo ->
                 with(webInfo) {
                     var doc: Document?
@@ -70,7 +73,11 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
                     }
 
                     //val regex = """([!"#${'$'}%&'()*+,./:;<=>?@\^_`{|}~-])""".toRegex()
-                    val currentQueryResult = sb.toString().substring(0, 8191)
+                    var currentQueryResult = sb.toString()
+                    if (sb.toString().length > 8192) {
+                        currentQueryResult = currentQueryResult.substring(0, 8191)
+                    }
+
                     //Log.d(Const.DATA_TAG, regex.replace(currentQueryResult, ""))
                     Log.d(Const.DATA_TAG, currentQueryResult)
                     setWebInfoHtml(this, currentQueryResult)
@@ -80,7 +87,17 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
                     if (this.interval!! < Const.MINIMUM_INTERVAL) {
                         this.interval = Const.MINIMUM_INTERVAL
                     }
+                }
+            }
+            Log.d(Const.DEBUG_TAG, "Exit SwUpdate Worker")
+            return@Callable Result.success()
+        }).get()
 
+        if (getResult == null){
+            return Result.failure()
+        }else{
+            WebInfoViewModel.list?.stream()?.forEach{ webInfo ->
+                with(webInfo) {
                     val workRequest = PeriodicWorkRequest
                         .Builder(
                             SwNoticeWorker::class.java,
@@ -94,11 +111,10 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
                         this.date,
                         ExistingPeriodicWorkPolicy.REPLACE, workRequest
                     )
-
                 }
             }
+            return getResult
         }
-        return Result.success()
     }
 }
 

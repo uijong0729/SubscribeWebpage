@@ -10,6 +10,11 @@ import java.util.concurrent.TimeUnit
 object SwWorkRequest {
 
     fun updateData(context: Context) {
+//        WorkManager.initialize(
+//            context,
+//            Configuration.Builder().setExecutor(Executors.newFixedThreadPool(2)).build()
+//        )
+
         val workManager = WorkManager.getInstance(context)
         workManager.cancelAllWork()
 
@@ -20,10 +25,9 @@ object SwWorkRequest {
 
         workManager.enqueueUniquePeriodicWork(
             Const.SW_UPDATE_WORKER_ID,
-            ExistingPeriodicWorkPolicy.KEEP, workRequest
+            ExistingPeriodicWorkPolicy.REPLACE,
+            workRequest
         )
     }
-
-
 }
 

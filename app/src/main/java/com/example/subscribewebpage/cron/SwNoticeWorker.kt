@@ -1,6 +1,7 @@
 package com.example.subscribewebpage.cron
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.subscribewebpage.SwThreadPool
@@ -19,10 +20,11 @@ class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
             //=========== Data 취득 =============
             val dao = Transaction.getInstance(con)?.webInfoDao()
             WebInfoViewModel.list = dao?.getAll()
+            Log.d(Const.DEBUG_TAG, "Start Notice Worker. do work update size : ${WebInfoViewModel.list!!.size}")
 
             //=========== 값 비교를 위한 루프 =============
-            var isUpdated: Boolean = false
             WebInfoViewModel.list?.stream()?.forEach { webInfo ->
+                var isUpdated: Boolean = false
                 if (webInfo != null) {
                     with(webInfo) {
                         // == : 값 비교
@@ -33,6 +35,8 @@ class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
                             }
                         }
 
+                        Log.d(Const.DEBUG_TAG, "Notification Status $isUpdated")
+
                         if (isUpdated) {
                             AppNotification.createNotification(
                                 con,
@@ -41,7 +45,6 @@ class SwNoticeWorker(appContext: Context, workerParams: WorkerParameters) :
                                 Const.NOTICE_UPDATE
                             )
                         }
-
                     }
                 }
             }

@@ -3,10 +3,13 @@ package com.example.subscribewebpage.vm
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.common.SaveType
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfoEntity
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * <LiveData>
@@ -43,9 +46,11 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
         return allWebInfo
     }
 
-    fun getAllWebInfo() {
+    fun getAllWebInfo() :Job {
         list = Transaction.getInstance(getApplication())?.webInfoDao()?.getAll()
-        allWebInfo.postValue(list)
+        return viewModelScope.launch {
+            allWebInfo.postValue(list)
+        }
     }
 
     fun getWebInfo(id :Int): WebInfoEntity? {

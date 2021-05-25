@@ -1,6 +1,7 @@
 package com.example.subscribewebpage.data
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 //https://developer.android.com/training/data-storage/room/accessing-data
 @Dao
@@ -8,6 +9,9 @@ interface WebInfoDao {
 
     @Query("SELECT title, searchKeyword, url, interval, enable, date, id, substr(previousHtml, 0, 8191) as previousHtml, substr(currentHtml, 0, 8191) as currentHtml, cssQuery, tagAttr  FROM WebInfo")
     fun getAll(): MutableList<WebInfoEntity>
+
+    @Query("SELECT title, searchKeyword, url, interval, enable, date, id, substr(previousHtml, 0, 8191) as previousHtml, substr(currentHtml, 0, 8191) as currentHtml, cssQuery, tagAttr  FROM WebInfo")
+    fun getAllBack(): Flow<List<WebInfoEntity>>
 
     @Query("SELECT * FROM WebInfo WHERE id = :infoKey")
     fun getWebInfoById(infoKey: Int): WebInfoEntity
