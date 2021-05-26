@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.*
 import com.example.subscribewebpage.SwThreadPool
+import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
 import com.example.subscribewebpage.data.Transaction
 import com.example.subscribewebpage.data.WebInfoEntity
@@ -13,7 +14,6 @@ import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import java.net.UnknownHostException
 import java.util.concurrent.Callable
-import java.util.concurrent.TimeUnit
 
 class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
@@ -98,19 +98,25 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
         }else{
             WebInfoViewModel.list?.stream()?.forEach{ webInfo ->
                 with(webInfo) {
-                    val workRequest = PeriodicWorkRequest
-                        .Builder(
-                            SwNoticeWorker::class.java,
-                            this.interval!!,
-                            TimeUnit.MINUTES
-                        )
-                        .build()
+                    // == : 값 비교
+                    // === : 참조 비교
+                    var isUpdated = false
+                    if (this.previousHtml != this.currentHtml) {
+                        if (currentHtml.indexOf(this.searchKeyword, 0) > 0) {
+                            isUpdated = true
+                        }
+                    }
 
-                    val workManager = WorkManager.getInstance(context)
-                    workManager.enqueueUniquePeriodicWork(
-                        this.date,
-                        ExistingPeriodicWorkPolicy.REPLACE, workRequest
-                    )
+                    Log.d(Const.DEBUG_TAG, "Notification Status $isUpdated")
+
+                    if (isUpdated) {
+                        AppNotification.createNotification(
+                            context,
+                            this.id,
+                            title,
+                            Const.NOTICE_UPDATE
+                        )
+                    }
                 }
             }
             return getResult

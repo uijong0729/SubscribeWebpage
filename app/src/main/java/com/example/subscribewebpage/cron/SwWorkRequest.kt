@@ -16,7 +16,7 @@ object SwWorkRequest {
 //        )
 
         val workManager = WorkManager.getInstance(context)
-        workManager.cancelAllWork()
+        //workManager.cancelAllWork()
 
         // DB 갱신용 Work
         val workRequest = PeriodicWorkRequest
