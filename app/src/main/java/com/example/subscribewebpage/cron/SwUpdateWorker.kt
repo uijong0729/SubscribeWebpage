@@ -2,7 +2,8 @@ package com.example.subscribewebpage.cron
 
 import android.content.Context
 import android.util.Log
-import androidx.work.*
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
@@ -25,6 +26,7 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
             val dao = Transaction.getInstance(context)?.webInfoDao()
             WebInfoViewModel.list = dao?.getAll()
             Log.d(Const.DEBUG_TAG, "Start Update Worker. do work update size : ${WebInfoViewModel.list!!.size}")
+
             WebInfoViewModel.list?.stream()?.forEach { webInfo ->
                 with(webInfo) {
                     var doc: Document?
@@ -122,11 +124,11 @@ class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
             return getResult
         }
     }
-}
 
-private fun setWebInfoHtml(webInfo: WebInfoEntity, str: String) {
-    if (webInfo.previousHtml.isEmpty()) {
-        webInfo.previousHtml = str
+    private fun setWebInfoHtml(webInfo: WebInfoEntity, str: String) {
+        if (webInfo.previousHtml.isEmpty()) {
+            webInfo.previousHtml = str
+        }
+        webInfo.currentHtml = str
     }
-    webInfo.currentHtml = str
 }
