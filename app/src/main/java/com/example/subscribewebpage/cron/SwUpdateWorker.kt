@@ -16,8 +16,7 @@ import org.jsoup.select.Elements
 import java.net.UnknownHostException
 import java.util.concurrent.Callable
 
-class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) :
-    Worker(appContext, workerParams) {
+class SwUpdateWorker(appContext: Context, workerParams: WorkerParameters) : Worker(appContext, workerParams) {
     private val context: Context = appContext
 
     override fun doWork(): Result {

@@ -7,23 +7,21 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/TITLE_LIST_PAGE"
         android:supportsRtl="true"
         android:theme="@style/Theme.SubscribeWebpage">
         <activity
             android:name=".ItemDetailHostActivity"
-            android:label="@string/TITLE_LIST_PAGE">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:name=".SwInsertActivity"
-            android:label="@string/TITLE_LIST_PAGE">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:name=".SwInsertActivity">
         </activity>
     </application>
 
