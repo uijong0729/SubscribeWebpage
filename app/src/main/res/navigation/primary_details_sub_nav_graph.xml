@@ -7,7 +7,7 @@
     app:startDestination="@id/fragment_item_detail">
     <fragment
         android:id="@+id/fragment_item_detail"
-        android:name="com.example.subscribewebpage.Fragments.ItemDetailFragment"
+        android:name="com.example.subscribewebpage.view.fragment.ItemDetailFragment"
         android:label="@string/TITLE_INSERT_PAGE"
         tools:layout="@layout/fragment_item_detail">
         <argument

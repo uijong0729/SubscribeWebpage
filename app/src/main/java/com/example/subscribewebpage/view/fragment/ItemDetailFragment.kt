@@ -1,4 +1,4 @@
-package com.example.subscribewebpage.Fragments
+package com.example.subscribewebpage.view.fragment
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -13,11 +13,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.subscribewebpage.R
-import com.example.subscribewebpage.SwInsertActivity
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.FragmentItemDetailBinding
-import com.example.subscribewebpage.vm.WebInfoViewModel
+import com.example.subscribewebpage.model.data.WebInfoEntity
+import com.example.subscribewebpage.view.activity.SwInsertActivity
+import com.example.subscribewebpage.viewmodel.WebInfoViewModel
 
 /**
  * 리스트 중 하나를 클릭했을 때 표시되는 Fragment

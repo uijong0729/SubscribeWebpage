@@ -15,7 +15,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.example.subscribewebpage.ItemDetailHostActivity"
+        tools:context="com.example.subscribewebpage.view.activity.ItemDetailHostActivity"
         tools:listitem="@layout/item_list_content" >
     </androidx.recyclerview.widget.RecyclerView>
 

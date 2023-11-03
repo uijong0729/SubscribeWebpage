@@ -1,4 +1,4 @@
-package com.example.subscribewebpage.data
+package com.example.subscribewebpage.model.data
 
 import androidx.room.Dao
 import androidx.room.Query

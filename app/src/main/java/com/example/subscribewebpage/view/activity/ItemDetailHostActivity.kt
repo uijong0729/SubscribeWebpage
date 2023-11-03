@@ -1,4 +1,4 @@
-package com.example.subscribewebpage
+package com.example.subscribewebpage.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.subscribewebpage.cron.SwWorkRequest
+import com.example.subscribewebpage.R
 import com.example.subscribewebpage.databinding.ActivityItemDetailBinding
-import com.example.subscribewebpage.vm.WebInfoViewModel
+import com.example.subscribewebpage.logic.SwWorkRequest
+import com.example.subscribewebpage.viewmodel.WebInfoViewModel
 
 
 /**

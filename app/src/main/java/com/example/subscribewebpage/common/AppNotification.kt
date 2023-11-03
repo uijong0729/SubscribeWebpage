@@ -9,8 +9,8 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.subscribewebpage.ItemDetailHostActivity
 import com.example.subscribewebpage.R
+import com.example.subscribewebpage.view.activity.ItemDetailHostActivity
 
 object AppNotification {
 

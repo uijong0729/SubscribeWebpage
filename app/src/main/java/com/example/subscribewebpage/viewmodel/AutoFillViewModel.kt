@@ -1,11 +1,11 @@
-package com.example.subscribewebpage.vm
+package com.example.subscribewebpage.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.subscribewebpage.SwThreadPool
-import com.example.subscribewebpage.data.AutoFillEntity
-import com.example.subscribewebpage.data.Transaction
+import com.example.subscribewebpage.model.data.AutoFillEntity
+import com.example.subscribewebpage.model.data.Transaction
 
 /**
  * <LiveData>
@@ -30,7 +30,7 @@ class AutoFillViewModel(app: Application) : AndroidViewModel(app) {
         SwThreadPool.es.submit  {
             list = Transaction.getInstance(getApplication())?.autoFillDao()?.getAll()
             if (list!!.isNotEmpty()){
-                var tmpList = Array(list!!.size) { "" }
+                val tmpList = Array(list!!.size) { "" }
                 for (idx in list!!.indices){
                     tmpList[idx] = list!![idx].keyword
                 }

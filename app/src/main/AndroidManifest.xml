@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SubscribeWebpage">
         <activity
-            android:name=".ItemDetailHostActivity"
+            android:name=".view.activity.ItemDetailHostActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:name=".SwInsertActivity">
+            android:name=".view.activity.SwInsertActivity">
         </activity>
     </application>
 

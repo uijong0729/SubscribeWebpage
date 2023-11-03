@@ -1,11 +1,11 @@
-package com.example.subscribewebpage.data
+package com.example.subscribewebpage.model.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [WebInfoEntity::class, AutoFillEntity::class], version = 4)
+@Database(entities = [WebInfoEntity::class, AutoFillEntity::class], version = 4, exportSchema = false)
 abstract class Transaction: RoomDatabase() {
     abstract fun webInfoDao(): WebInfoDao
     abstract fun autoFillDao(): AutoFillDao
@@ -25,7 +25,7 @@ abstract class Transaction: RoomDatabase() {
                         .build()
                 }
             }
-            return this.INSTANCE
+            return INSTANCE
         }
     }
 }

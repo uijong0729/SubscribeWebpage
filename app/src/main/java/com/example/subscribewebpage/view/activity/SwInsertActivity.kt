@@ -1,4 +1,4 @@
-package com.example.subscribewebpage
+package com.example.subscribewebpage.view.activity
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -7,13 +7,14 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.subscribewebpage.R
+import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.common.AppUtils
 import com.example.subscribewebpage.common.BlankTokenizer
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.DialogInsertBinding
-import com.example.subscribewebpage.vm.WebInfoViewModel
-import io.github.rybalkinsd.kohttp.ext.httpGet
+import com.example.subscribewebpage.model.data.WebInfoEntity
+import com.example.subscribewebpage.viewmodel.WebInfoViewModel
 import java.net.UnknownHostException
 import java.util.concurrent.Callable
 
@@ -68,7 +69,7 @@ class SwInsertActivity : AppCompatActivity() {
                 val url = addUrl.text.toString()
                 val inspectUrl: Boolean = SwThreadPool.es.submit(Callable {
                     try {
-                        url.httpGet()
+                        //
                         //java.lang.IllegalArgumentException
                         //java.net.UnknownHostException
                         return@Callable true

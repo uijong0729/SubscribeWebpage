@@ -1,4 +1,4 @@
-package com.example.subscribewebpage.vm
+package com.example.subscribewebpage.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.common.SaveType
-import com.example.subscribewebpage.data.Transaction
-import com.example.subscribewebpage.data.WebInfoEntity
+import com.example.subscribewebpage.model.data.Transaction
+import com.example.subscribewebpage.model.data.WebInfoEntity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -61,9 +61,9 @@ class WebInfoViewModel(app: Application) : AndroidViewModel(app) {
         return obj
     }
 
-    private fun getWebInfoByDate(date :String):WebInfoEntity? = Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoByDate(date)
+    private fun getWebInfoByDate(date :String): WebInfoEntity? = Transaction.getInstance(getApplication())?.webInfoDao()?.getWebInfoByDate(date)
 
-    fun insertWebInfo(entity: WebInfoEntity) :WebInfoEntity? {
+    fun insertWebInfo(entity: WebInfoEntity) : WebInfoEntity? {
         Transaction.getInstance(getApplication())?.webInfoDao()?.insert(entity)
         val result: WebInfoEntity? = getWebInfoByDate(entity.date)
         if (result != null) {

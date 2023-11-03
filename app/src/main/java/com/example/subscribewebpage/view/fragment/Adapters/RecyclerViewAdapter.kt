@@ -1,4 +1,4 @@
-package com.example.subscribewebpage.Fragments.Adapters
+package com.example.subscribewebpage.view.fragment.Adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.ItemListContentBinding
+import com.example.subscribewebpage.model.data.WebInfoEntity
 
 class RecyclerViewAdapter(
-    private val onClickListener: RowClickListener)
+    private val onClickListener: RowClickListener
+)
     :RecyclerView.Adapter<RecyclerViewAdapter.InfoViewHolder>() {
 
     private var items = ArrayList<WebInfoEntity>()

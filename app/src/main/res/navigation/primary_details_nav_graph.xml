@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/item_list_fragment"
-        android:name="com.example.subscribewebpage.Fragments.ItemListFragment"
+        android:name="com.example.subscribewebpage.view.fragment.ItemListFragment"
         android:label="@string/TITLE_LIST_PAGE">
         <action
             android:id="@+id/nav_detail_action"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/item_detail_fragment"
-        android:name="com.example.subscribewebpage.Fragments.ItemDetailFragment"
+        android:name="com.example.subscribewebpage.view.fragment.ItemDetailFragment"
         android:label="@string/TITLE_INSERT_PAGE"
         tools:layout="@layout/fragment_item_detail">
         <argument

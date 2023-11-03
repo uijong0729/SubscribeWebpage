@@ -1,4 +1,4 @@
-package com.example.subscribewebpage.Fragments
+package com.example.subscribewebpage.view.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -11,12 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.subscribewebpage.Fragments.Adapters.RecyclerViewAdapter
 import com.example.subscribewebpage.R
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.data.WebInfoEntity
 import com.example.subscribewebpage.databinding.FragmentItemListBinding
-import com.example.subscribewebpage.vm.WebInfoViewModel
+import com.example.subscribewebpage.model.data.WebInfoEntity
+import com.example.subscribewebpage.view.fragment.Adapters.RecyclerViewAdapter
+import com.example.subscribewebpage.viewmodel.WebInfoViewModel
 
 /**
 *   리스트를 표시하는 프래그먼트

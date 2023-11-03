@@ -1,4 +1,4 @@
-package com.example.subscribewebpage.cron
+package com.example.subscribewebpage.logic
 
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy

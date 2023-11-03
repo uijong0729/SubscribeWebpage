@@ -2,7 +2,7 @@ package com.example.subscribewebpage
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.subscribewebpage.data.Transaction
+import com.example.subscribewebpage.model.data.Transaction
 import org.junit.Test
 import org.junit.runner.RunWith
 

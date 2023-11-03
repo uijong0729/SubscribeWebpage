@@ -1,4 +1,4 @@
-package com.example.subscribewebpage.cron
+package com.example.subscribewebpage.logic
 
 import android.content.Context
 import android.util.Log
@@ -7,9 +7,9 @@ import androidx.work.WorkerParameters
 import com.example.subscribewebpage.SwThreadPool
 import com.example.subscribewebpage.common.AppNotification
 import com.example.subscribewebpage.common.Const
-import com.example.subscribewebpage.data.Transaction
-import com.example.subscribewebpage.data.WebInfoEntity
-import com.example.subscribewebpage.vm.WebInfoViewModel
+import com.example.subscribewebpage.model.data.Transaction
+import com.example.subscribewebpage.model.data.WebInfoEntity
+import com.example.subscribewebpage.viewmodel.WebInfoViewModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
