@@ -53,4 +53,7 @@
     <string name="TITLE_INSERT_PAGE">詳細ページ</string>
     <string name="TITLE_LIST_PAGE">WEBモニタリング</string>
     <string name="https">https://</string>
+    <string name="tv_search_key">설정된 검색어</string>
+    <string name="bt_search">검색</string>
+    <string name="bt_set_search_key">검색어 설정</string>
 </resources>
